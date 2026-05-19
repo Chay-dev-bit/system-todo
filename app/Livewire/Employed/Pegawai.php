@@ -193,9 +193,9 @@ class Pegawai extends Component
 
             'kantor_id' => 'required|exists:kantor,id',
 
-            'unit_id' => 'required|exists:units,id',
+            'unit_id' => 'required',
 
-            'jabatan_id' => 'required|exists:jabatan,id',
+            'jabatan_id' => 'required',
 
         ]);
 
@@ -302,6 +302,10 @@ class Pegawai extends Component
 
     public function update()
     {
+        $pegawai = PegawaiModel::where(
+            'nip',
+            $this->pegawai_id
+        )->firstOrFail();
         $this->validate([
 
             'nip' => 'required|max:12|unique:pegawai,nip,' . $this->pegawai_id . ',nip',
@@ -328,9 +332,9 @@ class Pegawai extends Component
 
             'kantor_id' => 'required|exists:kantor,id',
 
-            'unit_id' => 'required|exists:units,id',
+            'unit_id' => 'required',
 
-            'jabatan_id' => 'required|exists:jabatan,id',
+            'jabatan_id' => 'required',
 
         ]);
 
