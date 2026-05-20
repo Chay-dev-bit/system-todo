@@ -258,13 +258,13 @@
 
             <x-slot name="footer">
 
-                <x-secondary-button wire:click="closeModal">
+                <x-secondary-button type="button" wire:click.prevent="closeModal">
 
                     Batal
 
                 </x-secondary-button>
 
-                <x-primary-button wire:click="save" class="ml-2 bg-[#0070C0] hover:bg-[#005B9F]">
+                <x-primary-button type="button" wire:click.prevent="save" class="ml-2 bg-[#0070C0] hover:bg-[#005B9F]">
 
                     Simpan Data
 
@@ -446,13 +446,13 @@
 
             <x-slot name="footer">
 
-                <x-secondary-button wire:click="closeModal">
+                <x-secondary-button type="button" wire:click.prevent="closeModal">
 
                     Batal
 
                 </x-secondary-button>
 
-                <x-primary-button wire:click="update" class="ml-2 bg-[#0070C0] hover:bg-[#005B9F]">
+                <x-primary-button type="button" wire:click.prevent="update" class="ml-2 bg-[#0070C0] hover:bg-[#005B9F]">
 
                     Update Data
 

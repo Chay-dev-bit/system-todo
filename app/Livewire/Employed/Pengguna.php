@@ -243,6 +243,8 @@ class Pengguna extends Component
 
             'email' => $this->email,
 
+            'no_wa' => $this->no_wa,
+
             'password' => Hash::make($this->password),
 
             'role_id' => $this->role_id,
