@@ -45,6 +45,19 @@
                     class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
 
+            @if (session()->has('success'))
+                <div class="mb-4 rounded-lg bg-green-100 border border-green-300 text-green-700 p-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session()->has('error'))
+                <div class="mb-4 rounded-lg bg-red-100 border border-red-300 text-red-700 p-4">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+
         </div>
 <!-- ================= MODAL INPUT PEGAWAI ================= -->
 <x-modal wire:model="confirmInput">
@@ -384,6 +397,8 @@
                     disabled
                 />
 
+                <input type="hidden" wire:model.defer="nip" />
+
             </div>
 
             {{-- NAMA --}}
@@ -640,13 +655,17 @@
 
         </x-secondary-button>
 
-        <x-primary-button
-            wire:click="update"
-            class="ml-2 bg-[#0070C0] hover:bg-[#005B9F]">
+        <button
+            type="button"
+            wire:click.prevent="update"
+            wire:loading.attr="disabled"
+            wire:target="update"
+            class="ml-2 inline-flex items-center px-4 py-2 bg-[#0070C0] text-white rounded-lg hover:bg-[#005B9F] focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
 
-            Update Data
+            <span wire:loading.remove wire:target="update">Update Data</span>
+            <span wire:loading wire:target="update">Updating...</span>
 
-        </x-primary-button>
+        </button>
 
     </x-slot>
 
@@ -814,7 +833,7 @@
                                                 </td>
 
                                                 <td class="px-6 py-4">
-                                                    {{ $pegawai->unit_id }}
+                                                    {{ $pegawai->jabatan_unit_id }}
                                                 </td>
 
                                                 <td class="px-6 py-4">

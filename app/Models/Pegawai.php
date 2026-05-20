@@ -29,7 +29,7 @@ class Pegawai extends Model
         'al_email',
         'aktif',
         'kantor_id',
-        'unit_id',
+        'jabatan_unit_id',
         'jabatan_id',
         'created_by',
         'created_date',

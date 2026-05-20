@@ -132,7 +132,7 @@ class Pegawai extends Component
 
                     ->orWhere('kantor_id', 'like', '%' . $this->search . '%')
 
-                    ->orWhere('unit_id', 'like', '%' . $this->search . '%')
+                    ->orWhere('jabatan_unit_id', 'like', '%' . $this->search . '%')
 
                     ->orWhere('jabatan_id', 'like', '%' . $this->search . '%');
 
@@ -225,7 +225,7 @@ class Pegawai extends Component
 
             'kantor_id' => $this->kantor_id,
 
-            'unit_id' => $this->unit_id,
+            'jabatan_unit_id' => $this->unit_id,
 
             'jabatan_id' => $this->jabatan_id,
 
@@ -257,8 +257,8 @@ class Pegawai extends Component
         // Gunakan where('nip') bukan findOrFail($id)
         $pegawai = PegawaiModel::where('nip', $id)->firstOrFail();
 
-        $this->pegawai_id = $pegawai->nip;
-        $this->nip = $pegawai->nip;
+        // $this->pegawai_id = $pegawai->nip;
+        // $this->nip = $pegawai->nip;
         // ... sisanya sama
 
         $this->pegawai_id = $pegawai->nip;
@@ -287,7 +287,7 @@ class Pegawai extends Component
 
         $this->kantor_id = $pegawai->kantor_id;
 
-        $this->unit_id = $pegawai->unit_id;
+        $this->unit_id = $pegawai->jabatan_unit_id;
 
         $this->jabatan_id = $pegawai->jabatan_id;
 
@@ -302,10 +302,6 @@ class Pegawai extends Component
 
     public function update()
     {
-        $pegawai = PegawaiModel::where(
-            'nip',
-            $this->pegawai_id
-        )->firstOrFail();
         $this->validate([
 
             'nip' => 'required|max:12|unique:pegawai,nip,' . $this->pegawai_id . ',nip',
@@ -338,7 +334,9 @@ class Pegawai extends Component
 
         ]);
 
-        $pegawai = PegawaiModel::findOrFail($this->pegawai_id);
+        session()->flash('debug', "update called pegawai_id={$this->pegawai_id} nip={$this->nip}");
+
+        $pegawai = PegawaiModel::where('nip', $this->pegawai_id)->firstOrFail();
 
         $pegawai->update([
 
@@ -364,7 +362,7 @@ class Pegawai extends Component
 
             'kantor_id' => $this->kantor_id,
 
-            'unit_id' => $this->unit_id,
+            'jabatan_unit_id' => $this->unit_id,
 
             'jabatan_id' => $this->jabatan_id,
 
