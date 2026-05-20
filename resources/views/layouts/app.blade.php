@@ -20,7 +20,7 @@
 
 <body class="font-sans antialiased">
     <header>
-        <img src="{{ asset('images/gambar-header.jpeg') }}" alt="Header Profile" width="100%">
+        <img src="{{ asset('images/Desain header sistem.png') }}" alt="Header Profile" width="100%">
         <div x-data="locationClock()" x-init="getLocation()" class="text-sm text-slate-700 font-medium flex justify-end mr-2">
 
             <span x-text="location"></span>,

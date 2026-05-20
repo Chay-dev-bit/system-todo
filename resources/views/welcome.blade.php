@@ -17,7 +17,7 @@
 
 <body class="antialiased font-sans">
     <div class="header">
-        <img src="{{ asset('images/gambar-header.jpeg') }}" alt="Header Image" width="100%">
+        <img src="{{ asset('images/Desain header sistem.png') }}" alt="Header Image" width="100%">
     </div>
     <!-- card menu master -->
     <div class="card-menu flex gap-4 mt-6 px-6">
