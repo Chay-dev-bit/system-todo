@@ -388,6 +388,9 @@
                                 {{-- ACTION --}}
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center gap-2">
+                                        <a href="{{ route('task', $project->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow min-w-[100px] text-center">
+                                            Lihat Task
+                                        </a>
                                         <button wire:click="edit('{{ $project->id }}')" class="bg-[#0070C0] hover:bg-[#005B9F] text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                             Edit
                                         </button>
@@ -399,7 +402,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="13" class="text-center py-10 text-slate-500">
+                                <td colspan="14" class="text-center py-10 text-slate-500">
                                     Data tidak ditemukan
                                 </td>
                             </tr>

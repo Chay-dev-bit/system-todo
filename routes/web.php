@@ -9,6 +9,7 @@ use App\Livewire\Employed\Pegawai;
 use App\Livewire\Employed\Unit;
 use App\Livewire\Employed\Role;
 use App\Livewire\Todo\Project;
+use App\Livewire\Todo\Task;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/project', Project::class)
         ->name('project');
+
+    Route::get('/project/{projectId}/task', Task::class)
+        ->name('task');
 });
 
 require __DIR__ . '/auth.php';
