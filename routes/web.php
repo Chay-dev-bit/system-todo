@@ -8,6 +8,7 @@ use App\Livewire\Employed\Pengguna;
 use App\Livewire\Employed\Pegawai;
 use App\Livewire\Employed\Unit;
 use App\Livewire\Employed\Role;
+use App\Livewire\Todo\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/pegawai', Pegawai::class)
         ->name('pegawai');
+
+    /*
+    |--------------------------------------------------------------------------
+    | To-Do List
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/project', Project::class)
+        ->name('project');
 });
 
 require __DIR__ . '/auth.php';
