@@ -55,4 +55,14 @@ class Project extends Model
     {
         return $this->belongsTo(Pengguna::class, 'approved_by', 'nip');
     }
+
+    public function getProgressPercentageAttribute()
+    {
+        $totalTasks = $this->tasks()->count();
+        if ($totalTasks === 0) {
+            return 0;
+        }
+        $completedTasks = $this->tasks()->where('status', 'approved')->count();
+        return round(($completedTasks / $totalTasks) * 100);
+    }
 }

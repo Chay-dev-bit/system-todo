@@ -24,6 +24,9 @@ class Task extends Model
         'verified_at',
         'approved_by',
         'approved_at',
+        'rejection_note',
+        'rejected_by',
+        'rejected_at',
         'created_by',
         'updated_by',
     ];
@@ -33,6 +36,7 @@ class Task extends Model
         'submitted_at' => 'datetime',
         'verified_at' => 'datetime',
         'approved_at' => 'datetime',
+        'rejected_at' => 'datetime',
     ];
 
     public function project()
@@ -78,5 +82,10 @@ class Task extends Model
     public function approver()
     {
         return $this->belongsTo(Pengguna::class, 'approved_by', 'nip');
+    }
+
+    public function rejector()
+    {
+        return $this->belongsTo(Pengguna::class, 'rejected_by', 'nip');
     }
 }

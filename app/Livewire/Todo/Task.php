@@ -21,11 +21,9 @@ class Task extends Component
     public $title;
     public $description;
     public $assigned_to;
-    public $deadline;
     public $priority;
     public $attachment;
     public $status;
-    public $progress;
 
     public $perPage = 5;
     public $search = '';
@@ -33,8 +31,11 @@ class Task extends Component
     public $confirmInput = false;
     public $confirmEdit = false;
     public $confirmUpload = false;
+    public $confirmReject = false;
     public $task_id_for_upload;
     public $revision_notes;
+    public $task_id_for_reject;
+    public $rejection_note;
 
     public function mount($projectId)
     {
@@ -63,8 +64,39 @@ class Task extends Component
         $this->confirmInput = false;
         $this->confirmEdit = false;
         $this->confirmUpload = false;
+        $this->confirmReject = false;
         $this->task_id_for_upload = null;
+        $this->task_id_for_reject = null;
         $this->revision_notes = null;
+        $this->rejection_note = null;
+    }
+
+    public function showReject($id)
+    {
+        $this->task_id_for_reject = $id;
+        $this->rejection_note = null;
+        $this->confirmReject = true;
+    }
+
+    public function reject()
+    {
+        $this->validate([
+            'rejection_note' => 'required|min:10|max:500',
+        ]);
+
+        $task = TaskModel::findOrFail($this->task_id_for_reject);
+
+        $task->update([
+            'status' => 'rejected',
+            'rejection_note' => $this->rejection_note,
+            'rejected_by' => auth()->user()->nip ?? null,
+            'rejected_at' => now(),
+            'updated_by' => auth()->user()->nip ?? null,
+        ]);
+
+        session()->flash('success', 'Task berhasil ditolak! Pesan akan dikirim ke staff.');
+
+        $this->closeModal();
     }
 
     public function showUploadFile($id)
@@ -126,28 +158,18 @@ class Task extends Component
             'title' => 'required|max:255',
             'description' => 'nullable',
             'assigned_to' => 'required|exists:pengguna,nip',
-            'deadline' => 'nullable|date',
             'priority' => 'required|in:low,medium,high',
-            'status' => 'required|in:pending,in_progress,submitted,verified,approved,cancelled',
-            'progress' => 'nullable|integer|min:0|max:100',
-            'attachment' => 'nullable|file|max:10240',
+            'status' => 'required|in:pending,in_progress,submitted,verified,approved,rejected,cancelled',
         ]);
-
-        $attachmentPath = null;
-        if ($this->attachment) {
-            $attachmentPath = $this->attachment->store('task-attachments', 'public');
-        }
 
         TaskModel::create([
             'project_id' => $this->project_id,
             'title' => $this->title,
             'description' => $this->description,
             'assigned_to' => $this->assigned_to,
-            'deadline' => $this->deadline,
             'priority' => $this->priority,
             'status' => $this->status ?? 'pending',
-            'progress' => $this->progress ?? 0,
-            'attachment' => $attachmentPath,
+            'progress' => 0,
             'created_by' => auth()->user()->nip ?? null,
         ]);
 
@@ -165,10 +187,8 @@ class Task extends Component
         $this->title = $task->title;
         $this->description = $task->description;
         $this->assigned_to = $task->assigned_to;
-        $this->deadline = $task->deadline;
         $this->priority = $task->priority;
         $this->status = $task->status;
-        $this->progress = $task->progress;
 
         $this->confirmEdit = true;
     }
@@ -179,38 +199,18 @@ class Task extends Component
             'title' => 'required|max:255',
             'description' => 'nullable',
             'assigned_to' => 'required|exists:pengguna,nip',
-            'deadline' => 'nullable|date',
             'priority' => 'required|in:low,medium,high',
-            'status' => 'required|in:pending,in_progress,submitted,verified,approved,cancelled',
-            'progress' => 'nullable|integer|min:0|max:100',
-            'attachment' => 'nullable|file|max:10240',
+            'status' => 'required|in:pending,in_progress,submitted,verified,approved,rejected,cancelled',
         ]);
 
         $task = TaskModel::findOrFail($this->task_id);
-
-        $attachmentPath = $task->attachment;
-        if ($this->attachment) {
-            $attachmentPath = $this->attachment->store('task-attachments', 'public');
-        }
-
-        $status = $this->status;
-        $submittedAt = $task->submitted_at;
-        
-        if (in_array($task->status, ['pending', 'in_progress']) && $this->attachment) {
-            $status = 'submitted';
-            $submittedAt = now();
-        }
 
         $task->update([
             'title' => $this->title,
             'description' => $this->description,
             'assigned_to' => $this->assigned_to,
-            'deadline' => $this->deadline,
             'priority' => $this->priority,
-            'status' => $status,
-            'progress' => $this->progress,
-            'attachment' => $attachmentPath,
-            'submitted_at' => $submittedAt,
+            'status' => $this->status,
             'updated_by' => auth()->user()->nip ?? null,
         ]);
 
@@ -222,30 +222,62 @@ class Task extends Component
 
     public function verifikasi($id)
     {
-        $task = TaskModel::findOrFail($id);
+        try {
+            $task = TaskModel::findOrFail($id);
+            $user = auth()->user();
 
-        $task->update([
-            'status' => 'verified',
-            'verified_by' => auth()->user()->nip ?? null,
-            'verified_at' => now(),
-            'updated_by' => auth()->user()->nip ?? null,
-        ]);
+            if (!$user) {
+                session()->flash('error', 'Anda harus login terlebih dahulu!');
+                return;
+            }
 
-        session()->flash('success', 'Task berhasil diverifikasi!');
+            if (!$user->isAsmen()) {
+                session()->flash('error', 'Hanya Asisten Manajer yang bisa melakukan verifikasi!');
+                return;
+            }
+
+            $task->update([
+                'status' => 'verified',
+                'verified_by' => $user->nip ?? null,
+                'verified_at' => now(),
+                'updated_by' => $user->nip ?? null,
+            ]);
+
+            session()->flash('success', 'Task berhasil diverifikasi!');
+            $this->resetPage();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function approve($id)
     {
-        $task = TaskModel::findOrFail($id);
+        try {
+            $task = TaskModel::findOrFail($id);
+            $user = auth()->user();
 
-        $task->update([
-            'status' => 'approved',
-            'approved_by' => auth()->user()->nip ?? null,
-            'approved_at' => now(),
-            'updated_by' => auth()->user()->nip ?? null,
-        ]);
+            if (!$user) {
+                session()->flash('error', 'Anda harus login terlebih dahulu!');
+                return;
+            }
 
-        session()->flash('success', 'Task berhasil diapprove!');
+            if (!$user->isManajer()) {
+                session()->flash('error', 'Hanya Manajer yang bisa melakukan approve!');
+                return;
+            }
+
+            $task->update([
+                'status' => 'approved',
+                'approved_by' => $user->nip ?? null,
+                'approved_at' => now(),
+                'updated_by' => $user->nip ?? null,
+            ]);
+
+            session()->flash('success', 'Task berhasil diapprove!');
+            $this->resetPage();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     public function confirmDelete($id)
@@ -274,15 +306,11 @@ class Task extends Component
             'title',
             'description',
             'assigned_to',
-            'deadline',
             'priority',
             'status',
-            'progress',
-            'attachment',
         ]);
 
         $this->status = 'pending';
         $this->priority = 'medium';
-        $this->progress = 0;
     }
 }

@@ -9,7 +9,7 @@
         <x-nav-link :active="true">
             Task ({{ $project->project_name }})
         </x-nav-link>
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}" id="logout-form">
             @csrf
             <x-nav-link href="#" id="logout">
                 Logout
@@ -25,6 +25,12 @@
         @if(session('success'))
             <div class="mb-6 p-4 bg-green-100 text-green-800 rounded-lg border border-green-200">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="mb-6 p-4 bg-red-100 text-red-800 rounded-lg border border-red-200">
+                {{ session('error') }}
             </div>
         @endif
 
@@ -76,12 +82,6 @@
                             </select>
                             <x-input-error :messages="$errors->get('assigned_to')" />
                         </div>
-
-                        <div>
-                            <x-input-label for="deadline" value="DEADLINE" />
-                            <x-input type="date" wire:model.defer="deadline" />
-                            <x-input-error :messages="$errors->get('deadline')" />
-                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
@@ -97,12 +97,6 @@
                         </div>
                     </div>
 
-                    <div>
-                        <x-input-label for="attachment" value="UPLOAD FILE" />
-                        <x-input type="file" wire:model.defer="attachment" />
-                        <x-input-error :messages="$errors->get('attachment')" />
-                    </div>
-
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <x-input-label for="status" value="STATUS" />
@@ -113,12 +107,6 @@
                                 <option value="cancelled">Cancelled</option>
                             </select>
                             <x-input-error :messages="$errors->get('status')" />
-                        </div>
-
-                        <div>
-                            <x-input-label for="progress" value="PROGRESS (%)" />
-                            <x-input type="number" wire:model.defer="progress" min="0" max="100" placeholder="0" />
-                            <x-input-error :messages="$errors->get('progress')" />
                         </div>
                     </div>
                 </div>
@@ -170,12 +158,6 @@
                             </select>
                             <x-input-error :messages="$errors->get('assigned_to')" />
                         </div>
-
-                        <div>
-                            <x-input-label for="deadline" value="DEADLINE" />
-                            <x-input type="date" wire:model.defer="deadline" />
-                            <x-input-error :messages="$errors->get('deadline')" />
-                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
@@ -191,24 +173,6 @@
                         </div>
                     </div>
 
-                    <div>
-                        <x-input-label for="attachment" value="UPLOAD FILE" />
-                        <x-input type="file" wire:model.defer="attachment" />
-                        <x-input-error :messages="$errors->get('attachment')" />
-                        @if($task_id)
-                            @php
-                                $currentTask = \App\Models\Task::find($task_id);
-                            @endphp
-                            @if($currentTask && $currentTask->attachment)
-                                <div class="mt-2">
-                                    <a href="{{ Storage::url($currentTask->attachment) }}" target="_blank" class="text-blue-600 hover:text-blue-800 underline text-sm">
-                                        Lihat File Lama
-                                    </a>
-                                </div>
-                            @endif
-                        @endif
-                    </div>
-
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <x-input-label for="status" value="STATUS" />
@@ -219,12 +183,6 @@
                                 <option value="cancelled">Cancelled</option>
                             </select>
                             <x-input-error :messages="$errors->get('status')" />
-                        </div>
-
-                        <div>
-                            <x-input-label for="progress" value="PROGRESS (%)" />
-                            <x-input type="number" wire:model.defer="progress" min="0" max="100" placeholder="0" />
-                            <x-input-error :messages="$errors->get('progress')" />
                         </div>
                     </div>
                 </div>
@@ -273,6 +231,40 @@
             </x-slot>
         </x-modal>
 
+        <!-- ================= MODAL REJECT TASK ================= -->
+        <x-modal wire:model="confirmReject">
+            <x-slot name="title">
+                <span class="text-lg font-semibold text-red-700">
+                    Tolak Task
+                </span>
+            </x-slot>
+            <x-slot name="content">
+                <div class="space-y-4">
+                    <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                        <p class="text-sm text-red-700">
+                            <strong>Peringatan:</strong> Task yang ditolak akan dikembalikan ke staff dengan catatan Anda.
+                        </p>
+                    </div>
+
+                    <div>
+                        <x-input-label for="rejection_note" value="CATATAN PENOLAKAN (Wajib)" />
+                        <textarea wire:model.defer="rejection_note" rows="5"
+                            class="w-full rounded-lg border border-red-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-red-500"
+                            placeholder="Masukkan alasan mengapa task ini ditolak... (minimal 10 karakter)"></textarea>
+                        <x-input-error :messages="$errors->get('rejection_note')" />
+                    </div>
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-secondary-button wire:click="closeModal">
+                    Cancel
+                </x-secondary-button>
+                <button wire:click="reject" class="ml-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow">
+                    Tolak Task
+                </button>
+            </x-slot>
+        </x-modal>
+
         {{-- TABLE --}}
         <div class="rounded-2xl overflow-hidden">
             <div class="overflow-x-auto">
@@ -280,16 +272,16 @@
                     <thead class="bg-[#0070C0] text-white">
                         <tr class="text-sm uppercase tracking-wide">
                             <th class="px-6 py-4 text-left">No</th>
-                            <th class="px-6 py-4 text-left">Nama Task</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 200px;">Deskripsi</th>
-                            <th class="px-6 py-4 text-left">Assigned To</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Nama Task</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 350px;">Deskripsi</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 150px;">Assigned To</th>
                             <th class="px-6 py-4 text-left">Prioritas</th>
                             <th class="px-6 py-4 text-left">Upload File</th>
-                            <th class="px-6 py-4 text-left">Status</th>
-                            <th class="px-6 py-4 text-left">Progress</th>
-                            <th class="px-6 py-4 text-left">Verified By</th>
-                            <th class="px-6 py-4 text-left">Approved By</th>
-                            <th class="px-6 py-4 text-center">Action</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Tanggal Upload</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 150px;">Status</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Verified By</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Approved By</th>
+                            <th class="px-6 py-4 text-center" style="min-width: 450px;">Action</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-slate-200">
@@ -317,21 +309,31 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <span class="px-2 py-1 text-xs rounded-full 
-                                        @if($task->status == 'pending') bg-yellow-100 text-yellow-800 
-                                        @elseif($task->status == 'in_progress') bg-blue-100 text-blue-800 
-                                        @elseif($task->status == 'submitted') bg-orange-100 text-orange-800 
-                                        @elseif($task->status == 'verified') bg-purple-100 text-purple-800 
-                                        @elseif($task->status == 'approved') bg-green-100 text-green-800 
-                                        @else bg-red-100 text-red-800 @endif">
-                                        {{ ucfirst(str_replace('_', ' ', $task->status)) }}
-                                    </span>
+                                    @if($task->submitted_at)
+                                        {{ \Carbon\Carbon::parse($task->submitted_at)->format('d-m-Y H:i') }}
+                                    @else
+                                        <span class="text-slate-400 text-sm">-</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="w-full bg-slate-200 rounded-full h-2.5">
-                                        <div class="bg-[#0070C0] h-2.5 rounded-full" style="width: {{ $task->progress ?? 0 }}%"></div>
+                                    <div class="space-y-1">
+                                        <span class="px-2 py-1 text-xs rounded-full inline-block
+                                            @if($task->status == 'pending') bg-yellow-100 text-yellow-800 
+                                            @elseif($task->status == 'in_progress') bg-blue-100 text-blue-800 
+                                            @elseif($task->status == 'submitted') bg-orange-100 text-orange-800 
+                                            @elseif($task->status == 'verified') bg-purple-100 text-purple-800 
+                                            @elseif($task->status == 'approved') bg-green-100 text-green-800 
+                                            @elseif($task->status == 'rejected') bg-red-100 text-red-800 
+                                            @else bg-slate-100 text-slate-800 @endif">
+                                            {{ ucfirst(str_replace('_', ' ', $task->status)) }}
+                                        </span>
+
+                                        @if($task->status == 'rejected' && $task->rejection_note)
+                                            <div class="text-xs text-red-700 bg-red-50 p-2 rounded border border-red-200">
+                                                <strong>Catatan:</strong> {{ $task->rejection_note }}
+                                            </div>
+                                        @endif
                                     </div>
-                                    <span class="text-xs text-slate-600 mt-1">{{ $task->progress ?? 0 }}%</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     @if($task->verifier)
@@ -350,7 +352,7 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center gap-2 flex-wrap">
+                                    <div class="flex justify-center items-center gap-2 flex-nowrap">
                                         <button wire:click="edit('{{ $task->id }}')" class="bg-[#0070C0] hover:bg-[#005B9F] text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                             Edit
                                         </button>
@@ -361,15 +363,21 @@
                                             </a>
                                         @endif
 
-                                        @if($task->status == 'submitted')
+                                        @if($task->status == 'submitted' && auth()->user()?->isAsmen())
                                             <button wire:click="verifikasi('{{ $task->id }}')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Verifikasi
                                             </button>
+                                            <button wire:click="showReject('{{ $task->id }}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                                Tolak
+                                            </button>
                                         @endif
 
-                                        @if($task->status == 'verified')
+                                        @if($task->status == 'verified' && auth()->user()?->isManajer())
                                             <button wire:click="approve('{{ $task->id }}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Approve
+                                            </button>
+                                            <button wire:click="showReject('{{ $task->id }}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                                Tolak
                                             </button>
                                         @endif
 

@@ -6,7 +6,7 @@
         <x-nav-link :href="route('project')" :active="request()->routeIs('project')">
             Project
         </x-nav-link>
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}" id="logout-form">
             @csrf
             <x-nav-link href="#" id="logout">
                 Logout
@@ -356,6 +356,7 @@
                             <th class="px-6 py-4 text-left">Vendor</th>
                             <th class="px-6 py-4 text-left">PIC</th>
                             <th class="px-6 py-4 text-left">Status</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 200px;">Progress</th>
                             <th class="px-6 py-4 text-left">Verified By</th>
                             <th class="px-6 py-4 text-left">Approved By</th>
                             <th class="px-6 py-4 text-center">Action</th>
@@ -383,6 +384,16 @@
                                         {{ ucfirst($project->status) }}
                                     </span>
                                 </td>
+                                <td class="px-6 py-4">
+                                    <div class="space-y-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm font-semibold text-slate-700">{{ $project->progress_percentage }}%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-200 rounded-full h-3">
+                                            <div class="bg-[#0070C0] h-3 rounded-full transition-all duration-300" style="width: {{ $project->progress_percentage }}%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td class="px-6 py-4">{{ $project->verifier->nama_lengkap ?? '-' }}</td>
                                 <td class="px-6 py-4">{{ $project->approver->nama_lengkap ?? '-' }}</td>
                                 {{-- ACTION --}}
@@ -402,7 +413,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="14" class="text-center py-10 text-slate-500">
+                                <td colspan="15" class="text-center py-10 text-slate-500">
                                     Data tidak ditemukan
                                 </td>
                             </tr>

@@ -53,4 +53,30 @@ class Pengguna extends Authenticatable
             'nip'
         );
     }
+
+    public function isAsmen()
+    {
+        if (!$this->relationLoaded('role')) {
+            $this->load('role');
+        }
+        if (!$this->role) {
+            return false;
+        }
+        $roleName = strtolower($this->role->name);
+        return str_contains($roleName, 'asmen') || str_contains($roleName, 'asisten');
+    }
+
+    public function isManajer()
+    {
+        if (!$this->relationLoaded('role')) {
+            $this->load('role');
+        }
+        if (!$this->role) {
+            return false;
+        }
+        $roleName = strtolower($this->role->name);
+        $containsManajer = str_contains($roleName, 'manajer') || str_contains($roleName, 'manager');
+        $containsAsisten = str_contains($roleName, 'asmen') || str_contains($roleName, 'asisten');
+        return $containsManajer && !$containsAsisten;
+    }
 }
