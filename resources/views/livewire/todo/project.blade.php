@@ -472,7 +472,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="15" class="text-center py-10 text-slate-500">
+                                <td colspan="16" class="text-center py-10 text-slate-500">
                                     Data tidak ditemukan
                                 </td>
                             </tr>

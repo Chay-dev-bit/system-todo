@@ -133,7 +133,7 @@ class Task extends Component
                    "Project: {$task->project->project_name}\n" .
                    "Silakan cek di sistem!";
 
-        $phoneNumber = $asmen->pegawai?->no_telp;
+        $phoneNumber = $asmen->no_wa ?: ($asmen->pegawai?->no_telp);
         if ($phoneNumber) {
             $waha->sendWhatsApp($phoneNumber, $message);
         }
@@ -334,7 +334,7 @@ class Task extends Component
                    "Project: {$task->project->project_name}\n" .
                    "Silakan cek di sistem!";
 
-        $phoneNumber = $manajer->pegawai?->no_telp;
+        $phoneNumber = $manajer->no_wa ?: ($manajer->pegawai?->no_telp);
         if ($phoneNumber) {
             $waha->sendWhatsApp($phoneNumber, $message);
         }
@@ -356,7 +356,7 @@ class Task extends Component
                    "Alasan: {$this->rejection_note}\n" .
                    "Silakan cek di sistem!";
 
-        $phoneNumber = $staff->pegawai?->no_telp;
+        $phoneNumber = $staff->no_wa ?: ($staff->pegawai?->no_telp);
         if ($phoneNumber) {
             $waha->sendWhatsApp($phoneNumber, $message);
         }

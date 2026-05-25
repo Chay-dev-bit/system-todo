@@ -501,7 +501,7 @@ class Project extends Component
             "Dibuat oleh: {$creatorName}\n" .
             "Silakan cek di sistem.";
 
-        $phoneNumber = $asmen->pegawai?->no_telp;
+        $phoneNumber = $asmen->no_wa ?: ($asmen->pegawai?->no_telp);
         if (!$phoneNumber) {
             return;
         }
@@ -523,7 +523,7 @@ class Project extends Component
             "Diverifikasi oleh: {$asmenName}\n" .
             "Silakan cek di sistem.";
 
-        $phoneNumber = $manajer->pegawai?->no_telp;
+        $phoneNumber = $manajer->no_wa ?: ($manajer->pegawai?->no_telp);
         if (!$phoneNumber) {
             return;
         }
@@ -546,7 +546,7 @@ class Project extends Component
             "Alasan: {$note}\n" .
             "Silakan revisi lalu simpan ulang project.";
 
-        $phoneNumber = $creator->pegawai?->no_telp;
+        $phoneNumber = $creator->no_wa ?: ($creator->pegawai?->no_telp);
         if (!$phoneNumber) {
             return;
         }
@@ -568,7 +568,7 @@ class Project extends Component
             "Diapprove oleh: {$approverName}\n" .
             "Silakan cek di sistem.";
 
-        $phoneNumber = $creator->pegawai?->no_telp;
+        $phoneNumber = $creator->no_wa ?: ($creator->pegawai?->no_telp);
         if (!$phoneNumber) {
             return;
         }
