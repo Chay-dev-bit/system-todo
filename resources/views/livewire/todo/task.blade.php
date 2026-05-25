@@ -363,32 +363,32 @@
                                             </a>
                                         @endif
 
-                                        @if($task->status == 'submitted' && auth()->user()?->isAsmen())
-                                            <button wire:click="verifikasi('{{ $task->id }}')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                        @if($task->status == 'submitted' && auth()->user()?->isAsmen() && (auth()->user()?->nip == $task->project?->asmen_id))
+                                            <button wire:click="verifikasi({{ $task->id }})" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Verifikasi
                                             </button>
-                                            <button wire:click="showReject('{{ $task->id }}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                            <button wire:click="showReject({{ $task->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Tolak
                                             </button>
                                         @endif
 
                                         @if($task->status == 'verified' && auth()->user()?->isManajer())
-                                            <button wire:click="approve('{{ $task->id }}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                            <button wire:click="approve({{ $task->id }})" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Approve
                                             </button>
-                                            <button wire:click="showReject('{{ $task->id }}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                            <button wire:click="showReject({{ $task->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Tolak
                                             </button>
                                         @endif
 
-                                        <button wire:click="confirmDelete('{{ $task->id }}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                        <button wire:click="confirmDelete({{ $task->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                             Hapus
                                         </button>
                                     </div>
                                 </td>
                             </tr>
                         @empty
-                            <tr>
+                            <tr wire:key="task-{{ $task->id }}">
                                 <td colspan="11" class="text-center py-10 text-slate-500">
                                     Data tidak ditemukan
                                 </td>

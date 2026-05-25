@@ -245,6 +245,16 @@ class Task extends Component
                 return;
             }
 
+            if ($task->status !== 'submitted') {
+                session()->flash('error', 'Task ini tidak dalam status menunggu verifikasi!');
+                return;
+            }
+
+            if ($task->project?->asmen_id && $user->nip !== $task->project->asmen_id) {
+                session()->flash('error', 'Anda tidak memiliki akses verifikasi task pada project ini!');
+                return;
+            }
+
             $task->update([
                 'status' => 'verified',
                 'verified_by' => $user->nip ?? null,
@@ -254,6 +264,7 @@ class Task extends Component
 
             $task->project->updateStatus();
             $this->sendNotificationToManajer($task, $user);
+            $this->sendNotificationVerifiedToStaff($task, $user);
 
             session()->flash('success', 'Task berhasil diverifikasi!');
             $this->resetPage();
@@ -354,6 +365,29 @@ class Task extends Component
                    "Judul Task: {$task->title}\n" .
                    "Ditolak oleh: {$rejectorName}\n" .
                    "Alasan: {$this->rejection_note}\n" .
+                   "Silakan cek di sistem!";
+
+        $phoneNumber = $staff->no_wa ?: ($staff->pegawai?->no_telp);
+        if ($phoneNumber) {
+            $waha->sendWhatsApp($phoneNumber, $message);
+        }
+    }
+
+    protected function sendNotificationVerifiedToStaff($task, $asmen): void
+    {
+        $waha = new WahaService();
+        $staff = $task->assignee;
+
+        if (!$staff) {
+            return;
+        }
+
+        $asmenName = $asmen->nama_lengkap ?? 'Asisten Manajer';
+        $message = "Halo, task Anda sudah diverifikasi!\n\n" .
+                   "Judul Task: {$task->title}\n" .
+                   "Project: {$task->project->project_name}\n" .
+                   "Diverifikasi oleh: {$asmenName}\n" .
+                   "Status: Menunggu approve Manajer\n\n" .
                    "Silakan cek di sistem!";
 
         $phoneNumber = $staff->no_wa ?: ($staff->pegawai?->no_telp);

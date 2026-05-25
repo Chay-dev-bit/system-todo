@@ -385,6 +385,7 @@ class Project extends Component
             ]);
 
             $this->sendNotificationProjectToManajer($project, $user);
+            $this->sendNotificationProjectVerifiedToCreator($project, $user);
             session()->flash('success', 'Project berhasil diverifikasi!');
             $this->resetPage();
         } catch (\Throwable $e) {
@@ -524,6 +525,29 @@ class Project extends Component
             "Silakan cek di sistem.";
 
         $phoneNumber = $manajer->no_wa ?: ($manajer->pegawai?->no_telp);
+        if (!$phoneNumber) {
+            return;
+        }
+
+        (new WahaService())->sendWhatsApp($phoneNumber, $message);
+    }
+
+    protected function sendNotificationProjectVerifiedToCreator(ProjectModel $project, Pengguna $asmen): void
+    {
+        $creator = $project->creator;
+        if (!$creator) {
+            return;
+        }
+
+        $asmenName = $asmen->nama_lengkap ?? 'Asisten Manajer';
+        $message = "Halo, project Anda sudah diverifikasi!\n\n" .
+            "Kode: " . ($project->kode_project ?? '-') . "\n" .
+            "Nama: {$project->project_name}\n" .
+            "Diverifikasi oleh: {$asmenName}\n" .
+            "Status: Menunggu approve Manajer\n\n" .
+            "Silakan cek di sistem.";
+
+        $phoneNumber = $creator->no_wa ?: ($creator->pegawai?->no_telp);
         if (!$phoneNumber) {
             return;
         }
