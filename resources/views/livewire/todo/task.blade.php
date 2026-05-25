@@ -301,7 +301,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-2">
-                                        @if(in_array($task->status, ['pending', 'in_progress']) && $task->assigned_to == auth()->user()->nip)
+                                        @if(in_array($task->status, ['pending', 'in_progress', 'rejected']) && $task->assigned_to == auth()->user()->nip)
                                             <button wire:click="showUploadFile('{{ $task->id }}')" class="bg-[#0070C0] hover:bg-[#005B9F] text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Upload File
                                             </button>

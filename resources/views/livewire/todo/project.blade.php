@@ -127,6 +127,36 @@
                         <x-input-error :messages="$errors->get('pic_id')" />
                     </div>
 
+                    {{-- ASMEN --}}
+                    <div>
+                        <x-input-label for="asmen_id" value="ASISTEN MANAJER" />
+                        <select wire:model.defer="asmen_id"
+                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Pilih Asisten Manajer --</option>
+                            @foreach($penggunas as $pengguna)
+                                <option value="{{ $pengguna->nip }}">
+                                    {{ $pengguna->nama_lengkap }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('asmen_id')" />
+                    </div>
+
+                    {{-- MANAJER --}}
+                    <div>
+                        <x-input-label for="manajer_id" value="MANAJER" />
+                        <select wire:model.defer="manajer_id"
+                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Pilih Manajer --</option>
+                            @foreach($penggunas as $pengguna)
+                                <option value="{{ $pengguna->nip }}">
+                                    {{ $pengguna->nama_lengkap }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('manajer_id')" />
+                    </div>
+
                     {{-- STATUS --}}
                     <div>
                         <x-input-label for="status" value="STATUS" />
@@ -140,37 +170,6 @@
                         <x-input-error :messages="$errors->get('status')" />
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        {{-- VERIFIED BY --}}
-                        <div>
-                            <x-input-label for="verified_by" value="DIVERIFIKASI OLEH" />
-                            <select wire:model.defer="verified_by"
-                                class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
-                                <option value="">-- Pilih --</option>
-                                @foreach($penggunas as $pengguna)
-                                    <option value="{{ $pengguna->nip }}">
-                                        {{ $pengguna->nama_lengkap }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('verified_by')" />
-                        </div>
-
-                        {{-- APPROVED BY --}}
-                        <div>
-                            <x-input-label for="approved_by" value="DISETUJUI OLEH" />
-                            <select wire:model.defer="approved_by"
-                                class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
-                                <option value="">-- Pilih --</option>
-                                @foreach($penggunas as $pengguna)
-                                    <option value="{{ $pengguna->nip }}">
-                                        {{ $pengguna->nama_lengkap }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('approved_by')" />
-                        </div>
-                    </div>
                 </div>
             </x-slot>
             <x-slot name="footer">
@@ -283,6 +282,36 @@
                         <x-input-error :messages="$errors->get('pic_id')" />
                     </div>
 
+                    {{-- ASMEN --}}
+                    <div>
+                        <x-input-label for="asmen_id" value="ASISTEN MANAJER" />
+                        <select wire:model.defer="asmen_id"
+                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Pilih Asisten Manajer --</option>
+                            @foreach($penggunas as $pengguna)
+                                <option value="{{ $pengguna->nip }}">
+                                    {{ $pengguna->nama_lengkap }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('asmen_id')" />
+                    </div>
+
+                    {{-- MANAJER --}}
+                    <div>
+                        <x-input-label for="manajer_id" value="MANAJER" />
+                        <select wire:model.defer="manajer_id"
+                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            <option value="">-- Pilih Manajer --</option>
+                            @foreach($penggunas as $pengguna)
+                                <option value="{{ $pengguna->nip }}">
+                                    {{ $pengguna->nama_lengkap }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('manajer_id')" />
+                    </div>
+
                     {{-- STATUS --}}
                     <div>
                         <x-input-label for="status" value="STATUS" />
@@ -296,37 +325,6 @@
                         <x-input-error :messages="$errors->get('status')" />
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        {{-- VERIFIED BY --}}
-                        <div>
-                            <x-input-label for="verified_by" value="DIVERIFIKASI OLEH" />
-                            <select wire:model.defer="verified_by"
-                                class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
-                                <option value="">-- Pilih --</option>
-                                @foreach($penggunas as $pengguna)
-                                    <option value="{{ $pengguna->nip }}">
-                                        {{ $pengguna->nama_lengkap }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('verified_by')" />
-                        </div>
-
-                        {{-- APPROVED BY --}}
-                        <div>
-                            <x-input-label for="approved_by" value="DISETUJUI OLEH" />
-                            <select wire:model.defer="approved_by"
-                                class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
-                                <option value="">-- Pilih --</option>
-                                @foreach($penggunas as $pengguna)
-                                    <option value="{{ $pengguna->nip }}">
-                                        {{ $pengguna->nama_lengkap }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <x-input-error :messages="$errors->get('approved_by')" />
-                        </div>
-                    </div>
                 </div>
             </x-slot>
             <x-slot name="footer">
@@ -336,6 +334,36 @@
                 <x-primary-button wire:click="update" class="ml-2 bg-[#0070C0] hover:bg-[#005B9F]">
                     Update
                 </x-primary-button>
+            </x-slot>
+        </x-modal>
+
+        <x-modal wire:model="confirmReject">
+            <x-slot name="title">
+                <span class="text-lg font-semibold text-red-700">
+                    Tolak Project
+                </span>
+            </x-slot>
+            <x-slot name="content">
+                <div class="space-y-4">
+                    <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                        <p class="text-sm text-red-700">
+                            <strong>Peringatan:</strong> Project yang ditolak akan dikembalikan ke pembuat project dengan catatan Anda.
+                        </p>
+                    </div>
+                    <div>
+                        <x-input-label for="rejection_note" value="CATATAN PENOLAKAN (Wajib)" />
+                        <textarea wire:model.defer="rejection_note" rows="5" class="w-full rounded-lg border border-red-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-red-500" placeholder="Masukkan alasan mengapa project ini ditolak... (minimal 10 karakter)"></textarea>
+                        <x-input-error :messages="$errors->get('rejection_note')" />
+                    </div>
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-secondary-button wire:click="closeModal">
+                    Cancel
+                </x-secondary-button>
+                <button wire:click="rejectProject" class="ml-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow">
+                    Tolak
+                </button>
             </x-slot>
         </x-modal>
 
@@ -356,6 +384,7 @@
                             <th class="px-6 py-4 text-left">Vendor</th>
                             <th class="px-6 py-4 text-left">PIC</th>
                             <th class="px-6 py-4 text-left">Status</th>
+                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Approval</th>
                             <th class="px-6 py-4 text-left" style="min-width: 200px;">Progress</th>
                             <th class="px-6 py-4 text-left">Verified By</th>
                             <th class="px-6 py-4 text-left">Approved By</th>
@@ -385,6 +414,20 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs rounded-full
+                                        @if(($project->approval_status ?? 'pending') == 'pending') bg-yellow-100 text-yellow-800
+                                        @elseif($project->approval_status == 'verified') bg-purple-100 text-purple-800
+                                        @elseif($project->approval_status == 'approved') bg-green-100 text-green-800
+                                        @else bg-red-100 text-red-800 @endif">
+                                        {{ strtoupper($project->approval_status ?? 'pending') }}
+                                    </span>
+                                    @if(($project->approval_status ?? 'pending') == 'rejected' && $project->rejection_note)
+                                        <div class="mt-1 text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 inline-block">
+                                            Catatan: {{ Str::limit($project->rejection_note, 60) }}
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
                                     <div class="space-y-1">
                                         <div class="flex items-center justify-between">
                                             <span class="text-sm font-semibold text-slate-700">{{ $project->progress_percentage }}%</span>
@@ -399,6 +442,22 @@
                                 {{-- ACTION --}}
                                 <td class="px-6 py-4">
                                     <div class="flex justify-center gap-2">
+                                        @if(($project->approval_status ?? 'pending') == 'pending' && auth()->user()?->isAsmen() && (auth()->user()?->nip == $project->asmen_id))
+                                            <button wire:click="verifyProject('{{ $project->id }}')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                                Verifikasi
+                                            </button>
+                                            <button wire:click="showRejectProject('{{ $project->id }}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                                Tolak
+                                            </button>
+                                        @endif
+                                        @if(($project->approval_status ?? 'pending') == 'verified' && auth()->user()?->isManajer() && (auth()->user()?->nip == $project->manajer_id))
+                                            <button wire:click="approveProject('{{ $project->id }}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                                Approve
+                                            </button>
+                                            <button wire:click="showRejectProject('{{ $project->id }}')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+                                                Tolak
+                                            </button>
+                                        @endif
                                         <a href="{{ route('task', $project->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow min-w-[100px] text-center">
                                             Lihat Task
                                         </a>

@@ -1127,7 +1127,7 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-2">
-                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(in_array($task->status, ['pending', 'in_progress']) && $task->assigned_to == auth()->user()->nip): ?>
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(in_array($task->status, ['pending', 'in_progress', 'rejected']) && $task->assigned_to == auth()->user()->nip): ?>
                                             <button wire:click="showUploadFile('<?php echo e($task->id); ?>')" class="bg-[#0070C0] hover:bg-[#005B9F] text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
                                                 Upload File
                                             </button>

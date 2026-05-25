@@ -9,6 +9,7 @@ use App\Models\Project as ProjectModel;
 use App\Models\Pengguna;
 use Livewire\WithPagination;
 use Livewire\Attributes\On;
+use App\Services\WahaService;
 
 class Task extends Component
 {
@@ -78,27 +79,6 @@ class Task extends Component
         $this->confirmReject = true;
     }
 
-    public function reject()
-    {
-        $this->validate([
-            'rejection_note' => 'required|min:10|max:500',
-        ]);
-
-        $task = TaskModel::findOrFail($this->task_id_for_reject);
-
-        $task->update([
-            'status' => 'rejected',
-            'rejection_note' => $this->rejection_note,
-            'rejected_by' => auth()->user()->nip ?? null,
-            'rejected_at' => now(),
-            'updated_by' => auth()->user()->nip ?? null,
-        ]);
-
-        session()->flash('success', 'Task berhasil ditolak! Pesan akan dikirim ke staff.');
-
-        $this->closeModal();
-    }
-
     public function showUploadFile($id)
     {
         $this->task_id_for_upload = $id;
@@ -129,9 +109,34 @@ class Task extends Component
             'updated_by' => auth()->user()->nip ?? null,
         ]);
 
+        $task->project->updateStatus();
+        $this->sendNotificationToAsmen($task);
+
         session()->flash('success', 'Hasil berhasil dikirim!');
 
         $this->closeModal();
+    }
+
+    protected function sendNotificationToAsmen($task)
+    {
+        $waha = new WahaService();
+        $asmen = $task->project->asmen;
+
+        if (!$asmen) {
+            return;
+        }
+
+        $staffName = auth()->user()->nama_lengkap ?? 'Staff';
+        $message = "Halo, ada task baru yang menunggu verifikasi!\n\n" .
+                   "Staff: {$staffName}\n" .
+                   "Judul Task: {$task->title}\n" .
+                   "Project: {$task->project->project_name}\n" .
+                   "Silakan cek di sistem!";
+
+        $phoneNumber = $asmen->pegawai?->no_telp;
+        if ($phoneNumber) {
+            $waha->sendWhatsApp($phoneNumber, $message);
+        }
     }
 
     public function render()
@@ -162,7 +167,7 @@ class Task extends Component
             'status' => 'required|in:pending,in_progress,submitted,verified,approved,rejected,cancelled',
         ]);
 
-        TaskModel::create([
+        $task = TaskModel::create([
             'project_id' => $this->project_id,
             'title' => $this->title,
             'description' => $this->description,
@@ -172,6 +177,8 @@ class Task extends Component
             'progress' => 0,
             'created_by' => auth()->user()->nip ?? null,
         ]);
+
+        $task->project->updateStatus();
 
         session()->flash('success', 'Task berhasil ditambahkan');
 
@@ -214,6 +221,8 @@ class Task extends Component
             'updated_by' => auth()->user()->nip ?? null,
         ]);
 
+        $task->project->updateStatus();
+
         session()->flash('success', 'Task berhasil diupdate');
 
         $this->resetForm();
@@ -242,6 +251,9 @@ class Task extends Component
                 'verified_at' => now(),
                 'updated_by' => $user->nip ?? null,
             ]);
+
+            $task->project->updateStatus();
+            $this->sendNotificationToManajer($task, $user);
 
             session()->flash('success', 'Task berhasil diverifikasi!');
             $this->resetPage();
@@ -273,10 +285,80 @@ class Task extends Component
                 'updated_by' => $user->nip ?? null,
             ]);
 
+            $task->project->updateStatus();
+
             session()->flash('success', 'Task berhasil diapprove!');
             $this->resetPage();
         } catch (\Exception $e) {
             session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+    public function reject()
+    {
+        $this->validate([
+            'rejection_note' => 'required|min:10|max:500',
+        ]);
+
+        $task = TaskModel::findOrFail($this->task_id_for_reject);
+
+        $task->update([
+            'status' => 'rejected',
+            'rejection_note' => $this->rejection_note,
+            'rejected_by' => auth()->user()->nip ?? null,
+            'rejected_at' => now(),
+            'updated_by' => auth()->user()->nip ?? null,
+        ]);
+
+        $task->project->updateStatus();
+        $this->sendNotificationToStaff($task);
+
+        session()->flash('success', 'Task berhasil ditolak! Pesan akan dikirim ke staff.');
+
+        $this->closeModal();
+    }
+
+    protected function sendNotificationToManajer($task, $asmen)
+    {
+        $waha = new WahaService();
+        $manajer = $task->project->manajer;
+
+        if (!$manajer) {
+            return;
+        }
+
+        $asmenName = $asmen->nama_lengkap ?? 'Asisten Manajer';
+        $message = "Halo, ada task baru yang menunggu approve!\n\n" .
+                   "Asisten Manajer: {$asmenName}\n" .
+                   "Judul Task: {$task->title}\n" .
+                   "Project: {$task->project->project_name}\n" .
+                   "Silakan cek di sistem!";
+
+        $phoneNumber = $manajer->pegawai?->no_telp;
+        if ($phoneNumber) {
+            $waha->sendWhatsApp($phoneNumber, $message);
+        }
+    }
+
+    protected function sendNotificationToStaff($task)
+    {
+        $waha = new WahaService();
+        $staff = $task->assignee;
+
+        if (!$staff) {
+            return;
+        }
+
+        $rejectorName = auth()->user()->nama_lengkap ?? 'User';
+        $message = "Halo, task Anda telah ditolak!\n\n" .
+                   "Judul Task: {$task->title}\n" .
+                   "Ditolak oleh: {$rejectorName}\n" .
+                   "Alasan: {$this->rejection_note}\n" .
+                   "Silakan cek di sistem!";
+
+        $phoneNumber = $staff->pegawai?->no_telp;
+        if ($phoneNumber) {
+            $waha->sendWhatsApp($phoneNumber, $message);
         }
     }
 
@@ -293,7 +375,12 @@ class Task extends Component
 
     public function delete($id)
     {
-        TaskModel::findOrFail($id)->delete();
+        $task = TaskModel::findOrFail($id);
+        $project = $task->project;
+        $task->delete();
+        
+        $project->updateStatus();
+        
         session()->flash('success', 'Task berhasil dihapus');
 
         $this->resetPage();
