@@ -202,10 +202,25 @@
 
                 <x-input-label value="STATUS PERKAWINAN" />
 
-                <x-input
-                    type="text"
-                    wire:model.defer="status_perkawinan"
-                />
+                <select
+                            wire:model.defer="status"
+                            class="w-full rounded-lg border border-slate-300
+                                px-4 py-2 shadow-sm
+                                focus:ring-2 focus:ring-blue-500">
+
+                            <option value="">
+                                -- Pilih Status Perkawinan --
+                            </option>
+
+                            <option value="Kawin">
+                                K
+                            </option>
+
+                            <option value="Belum Kawin">
+                                B
+                            </option>
+
+                </select>
 
             </div>
 
@@ -509,10 +524,25 @@
 
                 <x-input-label value="STATUS PERKAWINAN" />
 
-                <x-input
-                    type="text"
-                    wire:model.defer="status_perkawinan"
-                />
+                <select
+                            wire:model.defer="status"
+                            class="w-full rounded-lg border border-slate-300
+                                px-4 py-2 shadow-sm
+                                focus:ring-2 focus:ring-blue-500">
+
+                            <option value="">
+                                -- Pilih Status Perkawinan --
+                            </option>
+
+                            <option value="Kawin">
+                                K
+                            </option>
+
+                            <option value="Belum Kawin">
+                                B
+                            </option>
+
+                </select>
 
             </div>
 
@@ -554,14 +584,14 @@
             </div>
 
             {{-- KANTOR --}}
-            <div>
+            <div wire:ignore>
 
                 <x-input-label value="KANTOR ID" />
 
                 <select
                     wire:model.defer="kantor_id"
-                    class="w-full rounded-lg border border-slate-300 px-4 py-2">
-
+                    class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2">
+                    
                     @foreach($kantors as $kantor)
 
                         <option value="{{ $kantor->id }}">
@@ -577,13 +607,13 @@
             </div>
 
             {{-- UNIT --}}
-            <div>
+            <div wire:ignore>
 
                 <x-input-label value="UNIT ID" />
 
                 <select
                     wire:model.defer="unit_id"
-                    class="w-full rounded-lg border border-slate-300 px-4 py-2">
+                    class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2">
 
                     @foreach($units as $unit)
 
@@ -600,13 +630,13 @@
             </div>
 
             {{-- JABATAN --}}
-            <div>
+            <div wire:ignore>
 
                 <x-input-label value="JABATAN ID" />
 
                 <select
                     wire:model.defer="jabatan_id"
-                    class="w-full rounded-lg border border-slate-300 px-4 py-2">
+                    class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2">
 
                     @foreach($jabatans as $jabatan)
 
