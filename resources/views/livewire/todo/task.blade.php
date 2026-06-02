@@ -41,6 +41,8 @@
                     auth()->user()?->nip === $project->pic_id
                     &&
                     $project->status == 'approved'
+                    &&
+                    $project->approval_status != 'completed'
                 )
 
                     <button
@@ -86,10 +88,10 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
+                        <div wire:ignore>
                             <x-input-label for="assigned_to" value="DI ASSIGN KE" />
                             <select wire:model.defer="assigned_to"
-                                class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                                class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2">
                                 <option value="">-- Pilih --</option>
                                 @foreach($penggunas as $pengguna)
                                     <option value="{{ $pengguna->nip }}">
