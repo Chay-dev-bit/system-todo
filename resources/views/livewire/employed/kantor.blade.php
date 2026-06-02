@@ -62,7 +62,7 @@
                         <x-input-label for="kode_kantor" value="ID Kantor" />
 
                         <x-input type="text" autocomplete="off" wire:model.defer="kode_kantor"
-                            placeholder="Masukkan ID Kantor" />
+                            placeholder="Masukkan ID Kantor Max 6" maxlength="6" />
 
                         <x-input-error :messages="$errors->get('kode_kantor')" />
                     </div>
@@ -108,7 +108,7 @@
                     </div>
 
                     <div>
-                        <x-input-label for="kantor_induk" value="kantor_induk" />
+                        <x-input-label for="kantor_induk" value="kantor induk" />
 
                         <x-input type="text" wire:model.defer="kantor_induk" placeholder="Masukkan Kantor Induk" />
 
@@ -340,7 +340,7 @@
 
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    {{ $kantor->created_by }}
+                                    {{ $kantor->created_by}}
                                 </td>
 
                                 <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
@@ -349,7 +349,7 @@
 
                                 </td>
                                 <td class="px-6 py-4 text-center">
-                                    {{ $kantor->modified_by }}
+                                    {{ $kantor->modified_by}}
                                 </td>
 
 

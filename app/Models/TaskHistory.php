@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class TaskHistory extends Model
 {
-    protected $table = 'task_histories';
-
     protected $fillable = [
         'task_id',
         'old_status',
         'new_status',
         'activity',
+        'action_type',
         'notes',
+        'file_path',
         'changed_by',
     ];
 
@@ -24,6 +24,10 @@ class TaskHistory extends Model
 
     public function changer()
     {
-        return $this->belongsTo(User::class, 'changed_by');
+        return $this->belongsTo(
+            Pengguna::class,
+            'changed_by',
+            'nip'
+        );
     }
 }

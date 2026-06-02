@@ -87,29 +87,84 @@ class Project extends Model
 
     public function getProgressPercentageAttribute()
     {
-        $totalTasks = $this->tasks()->count();
+        $tasks = $this->tasks()
+            ->where('status', '!=', 'cancelled')
+            ->get();
+
+        $totalTasks = $tasks->count();
+
         if ($totalTasks === 0) {
             return 0;
         }
-        $completedTasks = $this->tasks()->where('status', 'approved')->count();
+
+        $completedTasks = $tasks
+            ->where('status', 'approved')
+            ->count();
+
         return round(($completedTasks / $totalTasks) * 100);
     }
 
-    public function updateStatus()
+    // mengecek apakag semua task project sudah approved
+    public function isTaskCompleted()
     {
-        $totalTasks = $this->tasks()->count();
-        
+        // task aktif saja
+        $tasks = $this->tasks()
+            ->where('status', '!=', 'cancelled');
+
+        $totalTasks = $tasks->count();
+
+        // jika tidak ada task aktif
         if ($totalTasks === 0) {
-            $this->update(['status' => 'pending']);
-            return;
+
+            return false;
         }
 
-        $approvedTasks = $this->tasks()->where('status', 'approved')->count();
-        
-        if ($approvedTasks === $totalTasks) {
-            $this->update(['status' => 'completed']);
-        } else {
-            $this->update(['status' => 'ongoing']);
-        }
+        // semua task aktif harus approved
+        return $tasks
+            ->where('status', 'approved')
+            ->count() === $totalTasks;
     }
+
+    // digunakan untuk update final approval project
+    public function updateApprovalStatus()
+    {
+        // jika semua task sudah approved, maka project dianggap completed
+        // if ($this->isTaskCompleted()) {
+
+        //     $this->approval_status = 'verified';
+
+        // } else {
+        //     // jika belum semua task approved, maka project dianggap masih dalam progress
+        //     if (
+        //         in_array($this->approval_status, ['verified', 'completed'])
+        //     ) {
+
+        //         $this->approval_status = 'rejected';
+
+        //     } else {
+
+        //         $this->approval_status = 'progress';
+        //     }
+        // }
+        $this->save();
+    }
+
+    // mengecek apakah final project sudah completed 
+    public function isCompleted()
+    {
+        return $this->approval_status === 'completed';
+    }
+
+    // task hanya bisa dibuka jika project sudah approved
+    public function isTaskAvailable()
+    {
+        return $this->status === 'approved';
+    }
+
+    // project hanya bisa diverifikasi jika project belum dibatalkan
+    public function isRejected()
+    {
+        return $this->status === 'rejected';
+    }
+
 }

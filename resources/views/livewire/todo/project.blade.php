@@ -39,7 +39,8 @@
                     {{-- KODE PROJECT --}}
                     <div>
                         <x-input-label for="kode_project" value="KODE PROJECT" />
-                        <x-input type="text" wire:model.defer="kode_project" placeholder="Masukkan Kode Project" />
+                        <x-input type="text" wire:model.defer="kode_project" placeholder="Masukkan Kode Project"
+                            maxlength="6" />
                         <x-input-error :messages="$errors->get('kode_project')" />
                     </div>
 
@@ -63,14 +64,14 @@
                         {{-- START DATE --}}
                         <div>
                             <x-input-label for="start_date" value="TANGGAL MULAI" />
-                            <x-input type="date" wire:model.defer="start_date" />
+                            <x-input type="date" wire:model.defer="start_date" min="{{ date('Y-m-d') }}" />
                             <x-input-error :messages="$errors->get('start_date')" />
                         </div>
 
                         {{-- END DATE --}}
                         <div>
                             <x-input-label for="end_date" value="TANGGAL SELESAI" />
-                            <x-input type="date" wire:model.defer="end_date" />
+                            <x-input type="date" wire:model.defer="end_date" min="{{ date('Y-m-d') }}" />
                             <x-input-error :messages="$errors->get('end_date')" />
                         </div>
                     </div>
@@ -128,48 +129,39 @@
                     </div>
 
                     {{-- ASMEN --}}
-                    <div>
+                    <div wire:ignore>
                         <x-input-label for="asmen_id" value="ASISTEN MANAJER" />
                         <select wire:model.defer="asmen_id"
-                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+
                             <option value="">-- Pilih Asisten Manajer --</option>
-                            @foreach($penggunas as $pengguna)
+                            @foreach($asmens as $pengguna)
                                 <option value="{{ $pengguna->nip }}">
                                     {{ $pengguna->nama_lengkap }}
                                 </option>
                             @endforeach
+
                         </select>
                         <x-input-error :messages="$errors->get('asmen_id')" />
                     </div>
 
                     {{-- MANAJER --}}
-                    <div>
+                    <div wire:ignore>
                         <x-input-label for="manajer_id" value="MANAJER" />
                         <select wire:model.defer="manajer_id"
-                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+
                             <option value="">-- Pilih Manajer --</option>
-                            @foreach($penggunas as $pengguna)
+
+                            @foreach($manajers as $pengguna)
                                 <option value="{{ $pengguna->nip }}">
                                     {{ $pengguna->nama_lengkap }}
                                 </option>
                             @endforeach
+
                         </select>
                         <x-input-error :messages="$errors->get('manajer_id')" />
                     </div>
-
-                    {{-- STATUS --}}
-                    <div>
-                        <x-input-label for="status" value="STATUS" />
-                        <select wire:model.defer="status"
-                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
-                            <option value="pending">Pending</option>
-                            <option value="ongoing">Ongoing</option>
-                            <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('status')" />
-                    </div>
-
                 </div>
             </x-slot>
             <x-slot name="footer">
@@ -194,7 +186,8 @@
                     {{-- KODE PROJECT --}}
                     <div>
                         <x-input-label for="kode_project" value="KODE PROJECT" />
-                        <x-input type="text" wire:model.defer="kode_project" placeholder="Masukkan Kode Project" />
+                        <x-input type="text" wire:model.defer="kode_project" placeholder="Masukkan Kode Project"
+                            maxlength="6" />
                         <x-input-error :messages="$errors->get('kode_project')" />
                     </div>
 
@@ -218,14 +211,14 @@
                         {{-- START DATE --}}
                         <div>
                             <x-input-label for="start_date" value="TANGGAL MULAI" />
-                            <x-input type="date" wire:model.defer="start_date" />
+                            <x-input type="date" wire:model.defer="start_date" min="{{ date('Y-m-d') }}" />
                             <x-input-error :messages="$errors->get('start_date')" />
                         </div>
 
                         {{-- END DATE --}}
                         <div>
                             <x-input-label for="end_date" value="TANGGAL SELESAI" />
-                            <x-input type="date" wire:model.defer="end_date" />
+                            <x-input type="date" wire:model.defer="end_date" min="{{ date('Y-m-d') }}" />
                             <x-input-error :messages="$errors->get('end_date')" />
                         </div>
                     </div>
@@ -283,10 +276,10 @@
                     </div>
 
                     {{-- ASMEN --}}
-                    <div>
+                    <div wire:ignore>
                         <x-input-label for="asmen_id" value="ASISTEN MANAJER" />
                         <select wire:model.defer="asmen_id"
-                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
                             <option value="">-- Pilih Asisten Manajer --</option>
                             @foreach($penggunas as $pengguna)
                                 <option value="{{ $pengguna->nip }}">
@@ -298,10 +291,10 @@
                     </div>
 
                     {{-- MANAJER --}}
-                    <div>
+                    <div wire:ignore>
                         <x-input-label for="manajer_id" value="MANAJER" />
                         <select wire:model.defer="manajer_id"
-                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                            class="tom-select w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
                             <option value="">-- Pilih Manajer --</option>
                             @foreach($penggunas as $pengguna)
                                 <option value="{{ $pengguna->nip }}">
@@ -310,19 +303,6 @@
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('manajer_id')" />
-                    </div>
-
-                    {{-- STATUS --}}
-                    <div>
-                        <x-input-label for="status" value="STATUS" />
-                        <select wire:model.defer="status"
-                            class="w-full rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
-                            <option value="pending">Pending</option>
-                            <option value="ongoing">Ongoing</option>
-                            <option value="completed">Completed</option>
-                            <option value="cancelled">Cancelled</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('status')" />
                     </div>
 
                 </div>
@@ -347,12 +327,15 @@
                 <div class="space-y-4">
                     <div class="p-4 bg-red-50 rounded-lg border border-red-200">
                         <p class="text-sm text-red-700">
-                            <strong>Peringatan:</strong> Project yang ditolak akan dikembalikan ke pembuat project dengan catatan Anda.
+                            <strong>Peringatan:</strong> Project yang ditolak akan dikembalikan ke pembuat project
+                            dengan catatan Anda.
                         </p>
                     </div>
                     <div>
                         <x-input-label for="rejection_note" value="CATATAN PENOLAKAN (Wajib)" />
-                        <textarea wire:model.defer="rejection_note" rows="5" class="w-full rounded-lg border border-red-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-red-500" placeholder="Masukkan alasan mengapa project ini ditolak... (minimal 10 karakter)"></textarea>
+                        <textarea wire:model.defer="rejection_note" rows="5"
+                            class="w-full rounded-lg border border-red-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-red-500"
+                            placeholder="Masukkan alasan mengapa project ini ditolak... (minimal 10 karakter)"></textarea>
                         <x-input-error :messages="$errors->get('rejection_note')" />
                     </div>
                 </div>
@@ -361,12 +344,74 @@
                 <x-secondary-button wire:click="closeModal">
                     Cancel
                 </x-secondary-button>
-                <button wire:click="rejectProject" class="ml-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow">
+                <button wire:click="rejectProject"
+                    class="ml-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow">
                     Tolak
                 </button>
             </x-slot>
         </x-modal>
 
+        <!-- modal cancel -->
+        <x-modal wire:model="confirmCancel">
+
+            <x-slot name="title">
+
+                <span class="text-lg font-semibold text-yellow-700">
+
+                    Cancel Project
+
+                </span>
+
+            </x-slot>
+
+            <x-slot name="content">
+
+                <div class="space-y-4">
+
+                    <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+
+                        <p class="text-sm text-yellow-700">
+
+                            Project akan dibatalkan dan tidak dapat diproses lagi.
+
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <x-input-label for="cancel_note" value="ALASAN CANCEL" />
+
+                        <textarea wire:model.defer="cancel_note" rows="5"
+                            class="w-full rounded-lg border border-yellow-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-yellow-500"
+                            placeholder="Masukkan alasan pembatalan project..."></textarea>
+
+                        <x-input-error :messages="$errors->get('cancel_note')" />
+
+                    </div>
+
+                </div>
+
+            </x-slot>
+
+            <x-slot name="footer">
+
+                <x-secondary-button wire:click="closeModal">
+
+                    Batal
+
+                </x-secondary-button>
+
+                <button wire:click="cancelProject"
+                    class="ml-2 bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow">
+
+                    Cancel Project
+
+                </button>
+
+            </x-slot>
+
+        </x-modal>
         {{-- TABLE --}}
         <div class="rounded-2xl overflow-hidden">
             <div class="overflow-x-auto">
@@ -398,80 +443,357 @@
                                 <td class="px-6 py-4 font-semibold text-slate-700">{{ $project->kode_project ?? '-' }}</td>
                                 <td class="px-6 py-4 font-semibold text-slate-800">{{ $project->project_name }}</td>
                                 <td class="px-6 py-4">{{ Str::limit($project->description, 100) }}</td>
-                                <td class="px-6 py-4">{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : '-' }}</td>
-                                <td class="px-6 py-4">{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : '-' }}</td>
-                                <td class="px-6 py-4">{{ $project->capex_or_opex ? strtoupper($project->capex_or_opex) : '-' }}</td>
-                                <td class="px-6 py-4">{{ $project->biaya ? 'Rp ' . number_format($project->biaya, 2, ',', '.') : '-' }}</td>
+                                <td class="px-6 py-4">
+                                    {{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : '-' }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : '-' }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $project->capex_or_opex ? strtoupper($project->capex_or_opex) : '-' }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $project->biaya ? 'Rp ' . number_format($project->biaya, 2, ',', '.') : '-' }}
+                                </td>
                                 <td class="px-6 py-4">{{ $project->vendor ?? '-' }}</td>
                                 <td class="px-6 py-4">{{ $project->pic->nama_lengkap ?? '-' }}</td>
                                 <td class="px-6 py-4">
-                                    <span class="px-2 py-1 text-xs rounded-full 
-                                        @if($project->status == 'pending') bg-yellow-100 text-yellow-800 
-                                        @elseif($project->status == 'ongoing') bg-blue-100 text-blue-800 
-                                        @elseif($project->status == 'completed') bg-green-100 text-green-800 
-                                        @else bg-red-100 text-red-800 @endif">
-                                        {{ ucfirst($project->status) }}
+                                    <span
+                                        class="px-2 py-1 text-xs rounded-full
+
+                                                                                                                            @if($project->status == 'ongoing')
+                                                                                                                                bg-yellow-100 text-yellow-800
+
+                                                                                                                            @elseif($project->status == 'verified')
+                                                                                                                                bg-purple-100 text-purple-800
+
+                                                                                                                            @elseif($project->status == 'approved')
+                                                                                                                                bg-green-100 text-green-800
+
+                                                                                                                            @elseif($project->status == 'rejected')
+                                                                                                                                bg-red-100 text-red-800
+
+                                                                                                                            @elseif($project->status == 'cancelled')
+                                                                                                                                bg-gray-100 text-gray-800
+
+                                                                                                                            @endif">
+
+                                        {{ strtoupper($project->status) }}
+
                                     </span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="px-2 py-1 text-xs rounded-full
-                                        @if(($project->approval_status ?? 'pending') == 'pending') bg-yellow-100 text-yellow-800
-                                        @elseif($project->approval_status == 'verified') bg-purple-100 text-purple-800
-                                        @elseif($project->approval_status == 'approved') bg-green-100 text-green-800
-                                        @else bg-red-100 text-red-800 @endif">
-                                        {{ strtoupper($project->approval_status ?? 'pending') }}
-                                    </span>
-                                    @if(($project->approval_status ?? 'pending') == 'rejected' && $project->rejection_note)
-                                        <div class="mt-1 text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 inline-block">
-                                            Catatan: {{ Str::limit($project->rejection_note, 60) }}
+                                    @if(
+                                            in_array($project->status, ['rejected', 'cancelled']) &&
+                                            $project->rejection_note
+                                        )
+
+                                        <div
+                                            class="mt-1 text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 inline-block">
+
+                                            Catatan:
+                                            {{ Str::limit($project->rejection_note, 60) }}
+
                                         </div>
+
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">
-                                    <div class="space-y-1">
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-sm font-semibold text-slate-700">{{ $project->progress_percentage }}%</span>
+
+                                    @if($project->status == 'approved')
+
+                                        <span
+                                            class="px-2 py-1 text-xs rounded-full
+
+                                                                                                                        @if($project->approval_status == 'progress')
+                                                                                                                            bg-yellow-100 text-yellow-800
+
+                                                                                                                        @elseif($project->approval_status == 'verified')
+                                                                                                                            bg-purple-100 text-purple-800
+
+                                                                                                                        @elseif($project->approval_status == 'completed')
+                                                                                                                            bg-green-100 text-green-800
+
+                                                                                                                        @endif">
+
+                                            {{ strtoupper($project->approval_status) }}
+
+                                        </span>
+
+                                    @else
+
+                                        <span class="text-xs text-slate-400 italic">
+                                            Belum Masuk Tahap Task
+                                        </span>
+
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
+
+                                    @if($project->status == 'approved')
+
+                                        <div class="space-y-1">
+
+                                            <div class="flex items-center justify-between">
+
+                                                <span class="text-sm font-semibold text-slate-700">
+
+                                                    {{ $project->progress_percentage }}%
+
+                                                </span>
+
+                                            </div>
+
+                                            <div class="w-full bg-slate-200 rounded-full h-3">
+
+                                                <div class="bg-[#0070C0] h-3 rounded-full transition-all duration-300"
+                                                    style="width: {{ $project->progress_percentage }}%;">
+                                                </div>
+
+                                            </div>
+
                                         </div>
-                                        <div class="w-full bg-slate-200 rounded-full h-3">
-                                            <div class="bg-[#0070C0] h-3 rounded-full transition-all duration-300" style="width: {{ $project->progress_percentage }}%;"></div>
-                                        </div>
-                                    </div>
+
+                                    @else
+
+                                        <span class="text-xs text-slate-400 italic">
+
+                                            Task Belum Aktif
+
+                                        </span>
+
+                                    @endif
+
                                 </td>
                                 <td class="px-6 py-4">{{ $project->verifier->nama_lengkap ?? '-' }}</td>
                                 <td class="px-6 py-4">{{ $project->approver->nama_lengkap ?? '-' }}</td>
                                 {{-- ACTION --}}
                                 <td class="px-6 py-4">
-                                    <div class="flex justify-center gap-2">
-                                        @if(($project->approval_status ?? 'pending') == 'pending' && auth()->user()?->isAsmen() && (auth()->user()?->nip == $project->asmen_id))
-                                            <button wire:click="verifyProject({{ $project->id }})" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+
+                                    <div class="flex items-center justify-center gap-2 whitespace-nowrap">
+
+                                    {{-- Final Verify Task --}}
+                                    @if(
+
+                                        $project->status == 'approved'
+
+                                        &&
+
+                                        $project->approval_status == 'progress'
+
+                                        &&
+
+                                        $project->progress_percentage == 100
+
+                                        &&
+
+                                        auth()->user()?->isAsmen()
+
+                                        &&
+
+                                        auth()->user()?->nip == $project->asmen_id
+                                    )
+
+                                        <button
+                                            wire:click="verifyFinalProject({{ $project->id }})"
+                                            class="w-28 bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
+                                            Verify Final
+
+                                        </button>
+
+                                    @endif
+                                    {{-- Final Completed --}}
+                                    @if(
+
+                                        $project->status == 'approved'
+
+                                        &&
+
+                                        $project->approval_status == 'verified'
+
+                                        &&
+
+                                        auth()->user()?->isManajer()
+
+                                        &&
+
+                                        auth()->user()?->nip == $project->manajer_id
+                                    )
+
+                                        <button
+                                            wire:click="completeProject({{ $project->id }})"
+                                            class="w-28 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
+                                            Completed
+
+                                        </button>
+
+                                    @endif
+                                         {{-- Verifikasi --}}
+                                        @if(
+                                                $project->status == 'ongoing' &&
+                                                $project->status !== 'cancelled' &&
+                                                auth()->user()?->isAsmen() &&
+                                                auth()->user()?->nip == $project->asmen_id
+                                            )
+
+                                            <button wire:click="verifyProject({{ $project->id }})"
+                                                class="w-28 bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
                                                 Verifikasi
+
                                             </button>
-                                            <button wire:click="showRejectProject({{ $project->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+
+                                            <button wire:click="showRejectProject({{ $project->id }})"
+                                                class="w-28 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
                                                 Tolak
+
                                             </button>
+
                                         @endif
-                                        @if(($project->approval_status ?? 'pending') == 'verified' && auth()->user()?->isManajer() && (auth()->user()?->nip == $project->manajer_id))
-                                            <button wire:click="approveProject({{ $project->id }})" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+
+                                        {{-- Approve --}}
+                                        @if(
+                                                $project->status == 'verified' &&
+                                                $project->status !== 'cancelled' &&
+                                                auth()->user()?->isManajer() &&
+                                                auth()->user()?->nip == $project->manajer_id
+                                            )
+
+                                            <button wire:click="approveProject({{ $project->id }})"
+                                                class="w-28 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
                                                 Approve
+
                                             </button>
-                                            <button wire:click="showRejectProject({{ $project->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
+
+                                            <button wire:click="showRejectProject({{ $project->id }})"
+                                                class="w-28 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
                                                 Tolak
+
                                             </button>
+
                                         @endif
-                                        <a href="{{ route('task', $project->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow min-w-[100px] text-center">
-                                            Lihat Task
-                                        </a>
-                                        <button wire:click="edit({{ $project->id }})" class="bg-[#0070C0] hover:bg-[#005B9F] text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
-                                            Edit
-                                        </button>
-                                        <button wire:click="confirmDelete({{ $project->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-semibold shadow">
-                                            Hapus
-                                        </button>
+
+                                        {{-- Task --}}
+                                        @if($project->isTaskAvailable())
+
+                                            <a href="{{ route('task', $project->id) }}"
+                                                class="w-28 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg text-xs font-semibold shadow text-center">
+
+                                                Lihat Task
+                                            </a>
+
+                                        @else
+
+                                            <button disabled
+                                                class="w-28 bg-gray-400 text-white py-2 rounded-lg text-xs font-semibold cursor-not-allowed">
+
+                                                Task Off
+
+                                            </button>
+
+                                        @endif
+
+                                        {{-- Edit --}}
+                                        @if(
+
+                                                auth()->user()?->nip === $project->created_by
+
+                                                &&
+
+                                                in_array($project->status, [
+                                                    'ongoing',
+                                                    'rejected'
+                                                ])
+                                            )
+                                            <button wire:click="edit({{ $project->id }})"
+                                                class="w-28 bg-[#0070C0] hover:bg-[#005B9F] text-white py-2 rounded-lg text-xs font-semibold shadow">
+
+                                                Edit
+
+                                            </button>
+
+                                        @else
+
+                                            <button disabled
+                                                class="w-28 bg-gray-400 text-white py-2 rounded-lg text-xs font-semibold cursor-not-allowed">
+
+                                                Edit
+
+                                            </button>
+
+                                        @endif
+
+                                        {{-- Cancel --}}
+                                        @if(
+                                                (
+                                                    auth()->user()?->nip === $project->created_by ||
+
+                                                    auth()->user()?->nip === $project->asmen_id ||
+
+                                                    auth()->user()?->nip === $project->manajer_id
+                                                )
+                                                &&
+
+                                                !$project->isCompleted()
+
+                                                &&
+
+                                                $project->status !== 'approved'
+
+                                                &&
+
+                                                $project->status !== 'cancelled'
+                                            )
+
+                                            <button wire:click="showCancelProject({{ $project->id }})"
+                                                class="w-28 bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
+                                                Cancel
+
+                                            </button>
+
+                                        @endif
+
+                                        {{-- Delete --}}
+                                        @if(
+
+                                                auth()->user()?->nip === $project->created_by
+
+                                                &&
+
+                                                in_array($project->status, [
+                                                    'ongoing',
+                                                    'rejected'
+                                                ])
+                                            )
+
+                                            <button wire:click="confirmDelete({{ $project->id }})"
+                                                class="w-28 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-xs font-semibold shadow">
+
+                                                Hapus
+
+                                            </button>
+
+                                        @else
+
+                                            <button disabled
+                                                class="w-28 bg-gray-400 text-white py-2 rounded-lg text-xs font-semibold cursor-not-allowed">
+
+                                                Hapus
+
+                                            </button>
+
+                                        @endif
+
                                     </div>
+
                                 </td>
                             </tr>
                         @empty
-                            <tr wire:key="project-{{ $project->id }}">
+                            <tr wire:key="project-empty" class="bg-white">
                                 <td colspan="16" class="text-center py-10 text-slate-500">
                                     Data tidak ditemukan
                                 </td>

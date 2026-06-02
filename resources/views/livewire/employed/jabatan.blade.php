@@ -125,7 +125,7 @@
 
                         <x-input-label for="kode_jabatan" value="ID" />
 
-                        <x-input type="text" wire:model.defer="kode_jabatan" placeholder="Masukkan ID Jabatan" />
+                        <x-input type="text" wire:model.defer="kode_jabatan" placeholder="Masukkan ID Jabatan Max 6" maxlength="6" />
 
                         <x-input-error :messages="$errors->get('kode_jabatan')" />
 
@@ -292,7 +292,7 @@
 
                         <x-input-label for="kode_jabatan" value="ID" />
 
-                        <x-input type="text" wire:model.defer="kode_jabatan" disabled />
+                        <x-input type="text" wire:model.defer="kode_jabatan" disabled maxlength/>
 
                     </div>
 

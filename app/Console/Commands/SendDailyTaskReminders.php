@@ -11,7 +11,7 @@ class SendDailyTaskReminders extends Command
 {
     protected $signature = 'todo:send-daily-task-reminders';
 
-    protected $description = 'Kirim reminder WhatsApp jam 07:00 untuk task yang belum selesai.';
+    protected $description = 'Kirim reminder WhatsApp jam 12:36 untuk task yang belum selesai.';
 
     public function handle(): int
     {
@@ -49,7 +49,7 @@ class SendDailyTaskReminders extends Command
             }
 
             $lines = [];
-            $lines[] = 'Reminder Task - ' . $today->format('d-m-Y') . ' (07:00)';
+            $lines[] = 'Reminder Task - ' . $today->format('d-m-Y') . ' (12:36)';
             $lines[] = 'Halo ' . ($staff->nama_lengkap ?? 'Staff') . ', berikut task Anda yang belum selesai:';
             $lines[] = '';
 

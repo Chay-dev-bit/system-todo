@@ -73,11 +73,11 @@
                 <div class="grid grid-cols-2 gap-4">
 
                     {{-- NIP --}}
-                    <div>
+                    <div wire:ignore>
 
                         <x-input-label value="NIP" />
 
-                        <select wire:model.live="nip" class="w-full rounded-lg border border-slate-300
+                        <select wire:model.live="nip" class="tom-select w-full rounded-lg border border-slate-300
                                px-4 py-2 shadow-sm
                                focus:ring-2 focus:ring-blue-500">
 

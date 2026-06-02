@@ -33,11 +33,12 @@ return new class extends Migration
 
             // STATUS PROJECT
             $table->enum('status', [
-                'pending',
                 'ongoing',
-                'completed',
+                'verified',
+                'approved',
+                'rejected',
                 'cancelled'
-            ])->default('pending');
+            ])->default('ongoing');
 
             // siapa membuat
             $table->foreignId('created_by')

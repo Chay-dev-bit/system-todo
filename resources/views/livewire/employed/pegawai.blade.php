@@ -112,6 +112,7 @@
                 <x-input
                     type="text"
                     wire:model.defer="tempat_lahir"
+                    placeholder="Masukkan Tempat Lahir"
                 />
 
             </div>
@@ -142,11 +143,11 @@
                     </option>
 
                     <option value="L">
-                        Laki-Laki
+                        L
                     </option>
 
                     <option value="P">
-                        Perempuan
+                        P
                     </option>
 
                 </select>
@@ -409,7 +410,6 @@
                 <x-input
                     type="text"
                     wire:model.defer="nip"
-                    disabled
                 />
 
                 <input type="hidden" wire:model.defer="nip" />
@@ -464,11 +464,11 @@
                     class="w-full rounded-lg border border-slate-300 px-4 py-2">
 
                     <option value="L">
-                        Laki-Laki
+                        L
                     </option>
 
                     <option value="P">
-                        Perempuan
+                        P
                     </option>
 
                 </select>

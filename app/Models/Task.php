@@ -39,6 +39,12 @@ class Task extends Model
         'rejected_at' => 'datetime',
     ];
 
+    public function histories()
+    {
+        return $this->hasMany(
+            TaskHistory::class
+        )->latest();
+    }
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -64,11 +70,6 @@ class Task extends Model
         return $this->hasMany(TaskApproval::class);
     }
 
-    public function histories()
-    {
-        return $this->hasMany(TaskHistory::class);
-    }
-
     public function notifications()
     {
         return $this->hasMany(Notification::class);
@@ -87,5 +88,10 @@ class Task extends Model
     public function rejector()
     {
         return $this->belongsTo(Pengguna::class, 'rejected_by', 'nip');
+    }
+
+    public function isCancelled()
+    {
+        return $this->status === 'cancelled';
     }
 }

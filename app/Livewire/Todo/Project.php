@@ -13,20 +13,10 @@ class Project extends Component
 {
     use WithPagination;
 
-    /*
-    |--------------------------------------------------------------------------
-    | PRIMARY KEY
-    |--------------------------------------------------------------------------
-    */
-
+    // menyimpan id project yang sedang diedit atau ditolak
     public $project_id;
 
-    /*
-    |--------------------------------------------------------------------------
-    | FIELD FORM
-    |--------------------------------------------------------------------------
-    */
-
+    // field form input project
     public $kode_project;
     public $project_name;
     public $description;
@@ -40,37 +30,36 @@ class Project extends Component
     public $pic_id;
     public $asmen_id;
     public $manajer_id;
+
+    //    digunakan untuk status project awal
     public $status;
+
+    // digunakan saat task sudah berjalan
+    public $approval_status;
+
+    // approval info
     public $verified_by;
     public $approved_by;
+
+    // untuk reject
     public $project_id_for_reject;
     public $rejection_note;
 
-    /*
-    |--------------------------------------------------------------------------
-    | TABLE CONFIG
-    |--------------------------------------------------------------------------
-    */
-
+    // tabel config
     public $perPage = 5;
     public $search = '';
 
-    /*
-    |--------------------------------------------------------------------------
-    | MODAL
-    |--------------------------------------------------------------------------
-    */
-
+    // modal control
     public $confirmInput = false;
     public $confirmEdit = false;
     public $confirmReject = false;
 
-    /*
-    |--------------------------------------------------------------------------
-    | SEARCH & PAGINATION
-    |--------------------------------------------------------------------------
-    */
+    // untuk cancel project
+    public $cancel_note;
+    public $confirmCancel = false;
+    public $project_id_for_cancel;
 
+    // setup pagination theme
     public function updatedSearch()
     {
         $this->resetPage();
@@ -81,19 +70,15 @@ class Project extends Component
         $this->resetPage();
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | MODAL
-    |--------------------------------------------------------------------------
-    */
-
+    // menampilkan modal input project
     public function showDataInput()
     {
         $this->resetForm();
-        $this->status = 'pending';
+        // $this->status = 'pending';
         $this->confirmInput = true;
     }
 
+    // menutup semua modal
     public function closeModal()
     {
         $this->confirmInput = false;
@@ -101,14 +86,11 @@ class Project extends Component
         $this->confirmReject = false;
         $this->project_id_for_reject = null;
         $this->rejection_note = null;
+        $this->confirmCancel = false;
+        $this->project_id_for_cancel = null;
+        $this->cancel_note = null;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | RENDER
-    |--------------------------------------------------------------------------
-    */
-
+    // render view dengan data projects yang sudah difilter berdasarkan search dan pagination
     public function render()
     {
         $projects = ProjectModel::query()
@@ -122,20 +104,24 @@ class Project extends Component
 
         $penggunas = Pengguna::all();
 
+        $asmen = Pengguna::whereHas('pegawai', function ($query) {
+            $query->where('jabatan_id', 'ASMEN');
+        })->get();
+        $manajers = Pengguna::whereHas('pegawai', function ($query) {
+            $query->where('jabatan_id', 'MANAGR');
+        })->get();
         return view('livewire.todo.project', [
             'projects' => $projects,
             'penggunas' => $penggunas,
+            'asmens' => $asmen,
+            'manajers' => $manajers,
         ])->layout('layouts.app');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SAVE
-    |--------------------------------------------------------------------------
-    */
-
+    // menyimpan data project baru ke database setelah validasi
     public function save()
     {
+        // validasi inpur
         $this->validate([
             'kode_project' => 'required|unique:projects,kode_project|max:255',
             'project_name' => 'required|max:255',
@@ -149,13 +135,11 @@ class Project extends Component
             'pic_id' => 'required|exists:pengguna,nip',
             'asmen_id' => 'nullable|exists:pengguna,nip',
             'manajer_id' => 'nullable|exists:pengguna,nip',
-            'status' => 'required|in:pending,ongoing,completed,cancelled',
-            'verified_by' => 'nullable|exists:pengguna,nip',
-            'approved_by' => 'nullable|exists:pengguna,nip',
         ]);
-
+        // convert rupiah
         $this->biaya = $this->parseRupiah($this->biaya_formatted);
 
+        // create project
         $project = ProjectModel::create([
             'kode_project' => $this->kode_project,
             'project_name' => $this->project_name,
@@ -169,23 +153,16 @@ class Project extends Component
             'pic_id' => $this->pic_id,
             'asmen_id' => $this->asmen_id,
             'manajer_id' => $this->manajer_id,
-            'status' => $this->status ?? 'pending',
-            'approval_status' => 'pending',
-            'verified_by' => null,
-            'verified_at' => null,
-            'approved_by' => null,
-            'approved_at' => null,
-            'rejection_note' => null,
-            'rejected_by' => null,
-            'rejected_at' => null,
+            // Approval awal project 
+            'status' => 'ongoing',
+            // Progress task project 
+            'approval_status' => 'progress',
             'created_by' => auth()->user()->nip ?? null,
         ]);
 
-        $project->updateStatus();
+        // kirim notifikasi ke asmen jika project dibuat oleh user biasa
         $this->sendNotificationProjectToAsmen($project);
-
         session()->flash('success', 'Project berhasil ditambahkan');
-
         $this->resetForm();
         $this->closeModal();
     }
@@ -200,6 +177,7 @@ class Project extends Component
     {
         $project = ProjectModel::findOrFail($id);
 
+        // isi form edit
         $this->project_id = $project->id;
         $this->kode_project = $project->kode_project;
         $this->project_name = $project->project_name;
@@ -215,8 +193,7 @@ class Project extends Component
         $this->asmen_id = $project->asmen_id;
         $this->manajer_id = $project->manajer_id;
         $this->status = $project->status;
-        $this->verified_by = $project->verified_by;
-        $this->approved_by = $project->approved_by;
+        $this->approval_status = $project->approval_status;
 
         $this->confirmEdit = true;
     }
@@ -242,14 +219,35 @@ class Project extends Component
             'pic_id' => 'required|exists:pengguna,nip',
             'asmen_id' => 'nullable|exists:pengguna,nip',
             'manajer_id' => 'nullable|exists:pengguna,nip',
-            'status' => 'required|in:pending,ongoing,completed,cancelled',
-            'verified_by' => 'nullable|exists:pengguna,nip',
-            'approved_by' => 'nullable|exists:pengguna,nip',
         ]);
 
-        $this->biaya = $this->parseRupiah($this->biaya_formatted);
-
         $project = ProjectModel::findOrFail($this->project_id);
+
+        // project approved tidak boleh diedit
+        if (
+            in_array($project->status, [
+                'verified',
+                'approved',
+                'cancelled'
+            ])
+        )
+            $resetStatus =
+                $project->verified_by
+                ? 'verified'
+                : 'ongoing';
+        // hanya creator project yang boleh edit project rejected
+        if (
+            $project->status === 'rejected' &&
+            (auth()->user()->nip ?? null) !== $project->created_by
+        ) {
+            session()->flash(
+                'error',
+                'Hanya pembuat project yang dapat merevisi project rejected!'
+            );
+
+            return;
+        }
+        $this->biaya = $this->parseRupiah($this->biaya_formatted);
 
         $project->update([
             'kode_project' => $this->kode_project,
@@ -264,15 +262,14 @@ class Project extends Component
             'pic_id' => $this->pic_id,
             'asmen_id' => $this->asmen_id,
             'manajer_id' => $this->manajer_id,
-            'status' => $this->status,
-            'verified_by' => $project->verified_by,
-            'approved_by' => $project->approved_by,
             'updated_by' => auth()->user()->nip ?? null,
         ]);
 
-        if ($project->approval_status === 'rejected' && (auth()->user()->nip ?? null) === $project->created_by) {
+        // jika project sebelumnya di rejected maka reset menjeadi ongoing lagi
+        if ($project->status === 'rejected' && (auth()->user()->nip ?? null) === $project->created_by) {
             $project->update([
-                'approval_status' => 'pending',
+                'status' => $resetStatus,
+                'approval_status' => 'progress',
                 'verified_by' => null,
                 'verified_at' => null,
                 'approved_by' => null,
@@ -285,7 +282,6 @@ class Project extends Component
         }
 
         session()->flash('success', 'Project berhasil diupdate');
-
         $this->resetForm();
         $this->closeModal();
     }
@@ -309,8 +305,36 @@ class Project extends Component
 
     public function delete($id)
     {
+        $project = ProjectModel::findOrFail($id);
+        // hanya sipembuat yang boleh hapus
+        if (
+            $project->created_by !== (auth()->user()->nip ?? null)
+        ) {
+
+            session()->flash(
+                'error',
+                'Hanya pembuat project yang dapat menghapus project!'
+            );
+
+            return;
+        }
+
+        if (
+            in_array($project->status, [
+                'verified',
+                'approved',
+                'cancelled'
+            ])
+        ) {
+            session()->flash(
+                'error',
+                'Project yang sudah berjalan tidak dapat dihapus!'
+            );
+
+            return;
+        }
         try {
-            ProjectModel::findOrFail($id)->delete();
+            $project->delete();
             session()->flash('success', 'Project berhasil dihapus');
         } catch (\Exception $e) {
             session()->flash('error', 'Project tidak bisa dihapus karena masih memiliki task!');
@@ -342,48 +366,59 @@ class Project extends Component
             'pic_id',
             'asmen_id',
             'manajer_id',
+            'status',
+            'approval_status',
             'verified_by',
             'approved_by',
             'project_id_for_reject',
             'rejection_note',
         ]);
-        
-        $this->status = 'pending';
+
+        // $this->status = 'pending';
     }
 
+    // asmen memverifikasi project 
     public function verifyProject($id)
     {
         try {
+
             $project = ProjectModel::findOrFail($id);
             $user = auth()->user();
 
+            // cek login
             if (!$user) {
                 session()->flash('error', 'Anda harus login terlebih dahulu!');
                 return;
             }
 
+            // cek role asmen
             if (!$user->isAsmen() || ($project->asmen_id && $user->nip !== $project->asmen_id)) {
                 session()->flash('error', 'Anda tidak memiliki akses verifikasi project ini!');
                 return;
             }
-
-            if ($project->approval_status !== 'pending') {
+            // project yang sudah diverifikasi tidak dapat dibatalkan
+            if ($project->status === 'cancelled') {
+                session()->flash(
+                    'error',
+                    'Project yang dibatalkan tidak dapat diverifikasi!'
+                );
+                return;
+            }
+            // hanya project ongoing yang bisa diverifikasi
+            if ($project->status !== 'ongoing') {
                 session()->flash('error', 'Project ini tidak dalam status menunggu verifikasi!');
                 return;
             }
 
+            // update status project menjadi verified dan simpan info verifikator
             $project->update([
-                'approval_status' => 'verified',
+                'status' => 'verified',
                 'verified_by' => $user->nip ?? null,
                 'verified_at' => now(),
-                'approved_by' => null,
-                'approved_at' => null,
-                'rejection_note' => null,
-                'rejected_by' => null,
-                'rejected_at' => null,
                 'updated_by' => $user->nip ?? null,
             ]);
 
+            // kirim notifikasi
             $this->sendNotificationProjectToManajer($project, $user);
             $this->sendNotificationProjectVerifiedToCreator($project, $user);
             session()->flash('success', 'Project berhasil diverifikasi!');
@@ -393,37 +428,51 @@ class Project extends Component
         }
     }
 
+    // manajer mengapprove project yang sudah diverifikasi asmen
     public function approveProject($id)
     {
         try {
             $project = ProjectModel::findOrFail($id);
             $user = auth()->user();
 
+            // cek login
             if (!$user) {
                 session()->flash('error', 'Anda harus login terlebih dahulu!');
                 return;
             }
 
+            // cek role manejer
             if (!$user->isManajer() || ($project->manajer_id && $user->nip !== $project->manajer_id)) {
                 session()->flash('error', 'Anda tidak memiliki akses approve project ini!');
                 return;
             }
+            // project yang sudah di approve tidak boleh di canceller
+            if ($project->status === 'cancelled') {
 
-            if ($project->approval_status !== 'verified') {
+                session()->flash(
+                    'error',
+                    'Project yang dibatalkan tidak dapat diapprove!'
+                );
+
+                return;
+            }
+            // hanya project yang sudah diverifikasi asmen yang bisa diapprove manajer
+            if ($project->status !== 'verified') {
                 session()->flash('error', 'Project ini tidak dalam status menunggu approve!');
                 return;
             }
 
             $project->update([
-                'approval_status' => 'approved',
+                // Project aktif 
+                'status' => 'approved',
+                // Progress task dimulai
+                'approval_status' => 'progress',
                 'approved_by' => $user->nip ?? null,
                 'approved_at' => now(),
-                'rejection_note' => null,
-                'rejected_by' => null,
-                'rejected_at' => null,
                 'updated_by' => $user->nip ?? null,
             ]);
 
+            // kirim notifikasi
             $this->sendNotificationProjectApprovedToCreator($project, $user);
             session()->flash('success', 'Project berhasil diapprove!');
             $this->resetPage();
@@ -432,6 +481,7 @@ class Project extends Component
         }
     }
 
+    // show modal reject project dengan menyimpan id project yang akan ditolak
     public function showRejectProject($id)
     {
         $this->project_id_for_reject = $id;
@@ -439,6 +489,7 @@ class Project extends Component
         $this->confirmReject = true;
     }
 
+    // asmen atau manajer menolak project dengan menyimpan catatan penolakan dan mengirim notifikasi ke pembuat project
     public function rejectProject()
     {
         $this->validate([
@@ -454,16 +505,19 @@ class Project extends Component
                 return;
             }
 
-            $isAsmenReject = $user->isAsmen() && ($project->asmen_id ? $user->nip === $project->asmen_id : true) && $project->approval_status === 'pending';
-            $isManajerReject = $user->isManajer() && ($project->manajer_id ? $user->nip === $project->manajer_id : true) && $project->approval_status === 'verified';
-
+            // rejected oleh asmen
+            $isAsmenReject = $user->isAsmen() && ($project->asmen_id ? $user->nip === $project->asmen_id : true) && $project->status === 'ongoing';
+            // rejected oleh manajer
+            $isManajerReject = $user->isManajer() && ($project->manajer_id ? $user->nip === $project->manajer_id : true) && $project->status === 'verified';
+            // jika tidak memiliki akses reject
             if (!$isAsmenReject && !$isManajerReject) {
                 session()->flash('error', 'Anda tidak memiliki akses menolak project ini!');
                 return;
             }
 
+            // rejected project
             $payload = [
-                'approval_status' => 'rejected',
+                'status' => 'rejected',
                 'rejection_note' => $this->rejection_note,
                 'rejected_by' => $user->nip ?? null,
                 'rejected_at' => now(),
@@ -472,15 +526,17 @@ class Project extends Component
                 'updated_by' => $user->nip ?? null,
             ];
 
+            // reset verfier jika reject oleh asmen
             if ($isAsmenReject) {
                 $payload['verified_by'] = null;
                 $payload['verified_at'] = null;
             }
 
             $project->update($payload);
-            $this->sendNotificationProjectRejectedToCreator($project, $user, $this->rejection_note);
 
-            session()->flash('success', 'Project berhasil ditolak! Pesan akan dikirim ke pembuat project.');
+            // krim notifikasi rejected
+            $this->sendNotificationProjectRejectedToCreator($project, $user, $this->rejection_note);
+            session()->flash('success', 'Project berhasil ditolak!');
             $this->closeModal();
             $this->resetPage();
         } catch (\Throwable $e) {
@@ -488,6 +544,93 @@ class Project extends Component
         }
     }
 
+    // cancelled project
+    public function cancelProject()
+    {
+        $this->validate([
+            'cancel_note' => 'required|min:10|max:500',
+        ]);
+        try {
+
+            $project = ProjectModel::findOrFail(
+                $this->project_id_for_cancel
+            );
+
+            $user = auth()->user();
+
+            // cek login
+            if (!$user) {
+
+                session()->flash(
+                    'error',
+                    'Anda harus login terlebih dahulu!'
+                );
+
+                return;
+            }
+            // hanya creator project atau manejer yang boleh cancel project
+            $canCancel =
+
+                ($project->created_by === ($user->nip ?? null))
+
+                ||
+
+                ($project->asmen_id === ($user->nip ?? null))
+
+                ||
+
+                ($project->manajer_id === ($user->nip ?? null));
+
+            if (!$canCancel) {
+
+                session()->flash(
+                    'error',
+                    'Anda tidak memiliki akses membatalkan project ini!'
+                );
+
+                return;
+            }
+            // hanya project yang belum approved yang bisa dibatalkan
+            if ($project->approval_status === 'completed') {
+
+                session()->flash(
+                    'error',
+                    'Project yang sudah completed tidak dapat dibatalkan!'
+                );
+
+                return;
+            }
+            // cancelled project
+            $project->update([
+                // Cancel approval awal 
+                'status' => 'cancelled',
+                'rejection_note' => $this->cancel_note,
+                'rejected_by' => auth()->user()->nip ?? null,
+                'rejected_at' => now(),
+            ]);
+            $this->sendNotificationProjectCancelled(
+                $project,
+                $user,
+                $this->cancel_note
+            );
+            session()->flash(
+                'success',
+                'Project berhasil dibatalkan!'
+            );
+        } catch (\Throwable $e) {
+            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+        $this->closeModal();
+        $this->resetPage();
+    }
+    public function showCancelProject($id)
+    {
+        $this->project_id_for_cancel = $id;
+
+        $this->cancel_note = null;
+
+        $this->confirmCancel = true;
+    }
     protected function sendNotificationProjectToAsmen(ProjectModel $project): void
     {
         $asmen = $project->asmen;
@@ -510,6 +653,102 @@ class Project extends Component
         (new WahaService())->sendWhatsApp($phoneNumber, $message);
     }
 
+    public function verifyFinalProject($id)
+    {
+        $project = ProjectModel::findOrFail($id);
+
+        $user = auth()->user();
+
+        // hanya asmen
+        if (
+            !$user->isAsmen()
+            ||
+            $user->nip != $project->asmen_id
+        ) {
+
+            session()->flash(
+                'error',
+                'Anda tidak memiliki akses!'
+            );
+
+            return;
+        }
+
+        // progress harus 100%
+        if ($project->progress_percentage < 100) {
+
+            session()->flash(
+                'error',
+                'Progress task belum 100%'
+            );
+
+            return;
+        }
+
+        $project->update([
+            'approval_status' => 'verified',
+        ]);
+
+        // notif ke manajer
+        $this->sendNotificationFinalProjectToManajer(
+            $project,
+            $user
+        );
+
+        session()->flash(
+            'success',
+            'Final project berhasil diverifikasi!'
+        );
+    }
+    public function completeProject($id)
+    {
+        $project = ProjectModel::findOrFail($id);
+
+        $user = auth()->user();
+
+        // hanya manajer
+        if (
+            !$user->isManajer()
+            ||
+            $user->nip != $project->manajer_id
+        ) {
+
+            session()->flash(
+                'error',
+                'Anda tidak memiliki akses!'
+            );
+
+            return;
+        }
+
+        // harus verified final
+        if (
+            $project->approval_status != 'verified'
+        ) {
+
+            session()->flash(
+                'error',
+                'Project belum diverifikasi final!'
+            );
+
+            return;
+        }
+
+        $project->update([
+            'approval_status' => 'completed',
+        ]);
+
+        // notif creator
+        $this->sendNotificationProjectCompleted(
+            $project,
+            $user
+        );
+
+        session()->flash(
+            'success',
+            'Project berhasil diselesaikan!'
+        );
+    }
     protected function sendNotificationProjectToManajer(ProjectModel $project, Pengguna $asmen): void
     {
         $manajer = $project->manajer;
@@ -600,6 +839,116 @@ class Project extends Component
         (new WahaService())->sendWhatsApp($phoneNumber, $message);
     }
 
+    protected function sendNotificationProjectCancelled(
+        ProjectModel $project,
+        Pengguna $cancelBy,
+        string $note
+    ): void {
+
+        $creator = $project->creator;
+
+        if (!$creator) {
+            return;
+        }
+
+        $cancelName =
+            $cancelBy->nama_lengkap
+            ?? 'User';
+
+        $message =
+            "Halo, project Anda dibatalkan!\n\n" .
+
+            "Kode: " .
+            ($project->kode_project ?? '-') .
+            "\n" .
+
+            "Nama: {$project->project_name}\n" .
+
+            "Dibatalkan oleh: {$cancelName}\n" .
+
+            "Alasan: {$note}\n\n" .
+
+            "Silakan cek sistem untuk detail lebih lanjut.";
+
+        $phoneNumber =
+            $creator->no_wa
+            ?: ($creator->pegawai?->no_telp);
+
+        if (!$phoneNumber) {
+            return;
+        }
+
+        (new WahaService())->sendWhatsApp(
+            $phoneNumber,
+            $message
+        );
+    }
+    protected function sendNotificationFinalProjectToManajer(
+        ProjectModel $project,
+        Pengguna $asmen
+    ): void {
+
+        $manajer = $project->manajer;
+
+        if (!$manajer) {
+            return;
+        }
+
+        $message =
+            "Halo, seluruh task project sudah selesai dan menunggu final approve.\n\n" .
+
+            "Kode: {$project->kode_project}\n" .
+
+            "Nama: {$project->project_name}\n" .
+
+            "Diverifikasi oleh: {$asmen->nama_lengkap}\n\n" .
+
+            "Silakan cek sistem.";
+
+        $phone =
+            $manajer->no_wa
+            ?: ($manajer->pegawai?->no_telp);
+
+        if (!$phone) {
+            return;
+        }
+
+        (new WahaService())
+            ->sendWhatsApp($phone, $message);
+    }
+    protected function sendNotificationProjectCompleted(
+        ProjectModel $project,
+        Pengguna $manajer
+    ): void {
+
+        $creator = $project->creator;
+
+        if (!$creator) {
+            return;
+        }
+
+        $message =
+            "Halo, project Anda telah selesai.\n\n" .
+
+            "Kode: {$project->kode_project}\n" .
+
+            "Nama: {$project->project_name}\n" .
+
+            "Completed oleh: {$manajer->nama_lengkap}\n\n" .
+
+            "Status project: COMPLETED";
+
+        $phone =
+            $creator->no_wa
+            ?: ($creator->pegawai?->no_telp);
+
+        if (!$phone) {
+            return;
+        }
+
+        (new WahaService())
+            ->sendWhatsApp($phone, $message);
+    }
     /*
     |--------------------------------------------------------------------------
     | HELPER FORMAT & PARSE RUPIAH
@@ -608,13 +957,15 @@ class Project extends Component
 
     private function formatRupiah($number)
     {
-        if (!$number) return '';
+        if (!$number)
+            return '';
         return 'Rp ' . number_format($number, 2, ',', '.');
     }
 
     private function parseRupiah($formatted)
     {
-        if (!$formatted) return null;
+        if (!$formatted)
+            return null;
         $number = preg_replace('/[^0-9,]/', '', $formatted);
         $number = str_replace(',', '.', $number);
         return (float) $number;
