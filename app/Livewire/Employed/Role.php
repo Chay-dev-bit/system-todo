@@ -73,6 +73,10 @@ class Role extends Component
 
     public function showDataInput()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data role');
+            return;
+        }
         $this->resetForm();
 
         $this->confirmInput = true;
@@ -107,9 +111,15 @@ class Role extends Component
 
             ->paginate($this->perPage);
 
+        $user = auth()->user();
+        if ($user && !$user->relationLoaded('role')) {
+            $user->load('role');
+        }
+
         return view('livewire.employed.role', [
 
-            'roles' => $roles
+            'roles' => $roles,
+            'currentUser' => $user
 
         ])->layout('layouts.app');
     }
@@ -122,6 +132,10 @@ class Role extends Component
 
     public function save()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data role');
+            return;
+        }
         $this->validate([
 
             'name' => 'required|max:100|unique:roles,name',
@@ -156,6 +170,10 @@ class Role extends Component
 
     public function edit($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data role');
+            return;
+        }
         $role = RoleModel::findOrFail($id);
 
         $this->role_id = $role->id;
@@ -175,6 +193,10 @@ class Role extends Component
 
     public function update()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data role');
+            return;
+        }
         $this->validate([
 
             'name' => 'required|max:100|unique:roles,name,' . $this->role_id,
@@ -225,6 +247,10 @@ class Role extends Component
 
     public function delete($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menghapus data role');
+            return;
+        }
         try {
 
             RoleModel::findOrFail($id)->delete();

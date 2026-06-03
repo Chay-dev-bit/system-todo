@@ -79,4 +79,16 @@ class Pengguna extends Authenticatable
         $containsAsisten = str_contains($roleName, 'asmen') || str_contains($roleName, 'asisten');
         return $containsManajer && !$containsAsisten;
     }
+
+    public function isAdmin()
+    {
+        if (!$this->relationLoaded('role')) {
+            $this->load('role');
+        }
+        if (!$this->role) {
+            return false;
+        }
+        $roleName = strtolower($this->role->name);
+        return str_contains($roleName, 'admin');
+    }
 }

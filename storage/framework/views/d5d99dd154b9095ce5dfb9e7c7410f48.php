@@ -313,15 +313,6 @@ use Livewire\Volt\Component;
 
                     </label>
 
-                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('password.request')): ?>
-
-                        <a href="<?php echo e(route('password.request')); ?>" class="text-cyan-400 hover:text-cyan-300 transition"
-                            wire:navigate>
-                            Lupa Password?
-                        </a>
-
-                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-
                 </div>
 
                 <!-- Button -->

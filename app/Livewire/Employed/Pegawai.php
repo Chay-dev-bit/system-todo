@@ -102,6 +102,10 @@ class Pegawai extends Component
 
     public function showDataInput()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data pegawai');
+            return;
+        }
         $this->resetForm();
 
         $this->confirmInput = true;
@@ -146,6 +150,11 @@ class Pegawai extends Component
 
         $jabatans = JabatanModel::orderBy('nama_jabatan')->get();
 
+        $user = auth()->user();
+        if ($user && !$user->relationLoaded('role')) {
+            $user->load('role');
+        }
+
         return view('livewire.employed.pegawai', [
 
             'pegawais' => $pegawais,
@@ -155,6 +164,7 @@ class Pegawai extends Component
             'units' => $units,
 
             'jabatans' => $jabatans,
+            'currentUser' => $user,
 
         ])->layout('layouts.app');
     }
@@ -167,6 +177,10 @@ class Pegawai extends Component
 
     public function save()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data pegawai');
+            return;
+        }
         $this->validate([
 
             'nip' => 'required|max:12|unique:pegawai,nip',
@@ -253,6 +267,10 @@ class Pegawai extends Component
 
     public function edit($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data pegawai');
+            return;
+        }
         // $pegawai = PegawaiModel::findOrFail($id);
         // Gunakan where('nip') bukan findOrFail($id)
         $pegawai = PegawaiModel::where('nip', $id)->firstOrFail();
@@ -302,6 +320,10 @@ class Pegawai extends Component
 
     public function update()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data pegawai');
+            return;
+        }
         $this->validate([
 
             'nip' => 'required|max:12|unique:pegawai,nip,' . $this->pegawai_id . ',nip',
@@ -390,6 +412,11 @@ class Pegawai extends Component
 
     public function confirmDelete($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menghapus data pegawai');
+            return;
+        }
+
         $this->dispatch(
             'show-delete-confirmation',
             id: $id

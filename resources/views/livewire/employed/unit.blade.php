@@ -37,14 +37,17 @@
             <div class="flex justify-between">
 
                 {{-- BUTTON TAMBAH --}}
-                <button type="button" wire:click="showDataInput" class="bg-[#0070C0] hover:bg-blue-800
-                       text-white px-4 py-2 mb-4 rounded
-                       w-52 transition delay-150 duration-300
-                       ease-in-out hover:-translate-y-1 hover:scale-110">
+                @if($currentUser && $currentUser->isAdmin())
+                    <button type="button" wire:click="showDataInput"
+                        class="bg-[#0070C0] hover:bg-blue-800
+                        text-white px-4 py-2 mb-4 rounded
+                        w-52 transition delay-150 duration-300
+                        ease-in-out hover:-translate-y-1 hover:scale-110">
 
-                    Tambah Data
+                        Tambah Data
 
-                </button>
+                    </button>
+                @endif
 
                 {{-- SEARCH --}}
                 <input type="text" wire:model.live="search" placeholder="Search" class="w-72 rounded-lg border border-slate-300
@@ -361,21 +364,19 @@
 
                                                     <div class="flex justify-center gap-2">
 
+                                                        {{-- EDIT --}}
                                                         <button wire:click="edit('{{ $unit->id }}')"
-                                                            class="bg-[#0070C0] hover:bg-[#005B9F]
-                                                                                                                               text-white px-4 py-2
-                                                                                                                               rounded-lg text-xs
-                                                                                                                               font-semibold shadow">
+                                                            @disabled(!$currentUser || !$currentUser->isAdmin())
+                                                            class="px-4 py-2 rounded-lg text-xs font-semibold shadow {{ $currentUser && $currentUser->isAdmin() ? 'bg-[#0070C0] hover:bg-[#005B9F] text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60' }}">
 
                                                             Edit
 
                                                         </button>
 
+                                                        {{-- DELETE --}}
                                                         <button wire:click="confirmDelete('{{ $unit->id }}')"
-                                                            class="bg-red-500 hover:bg-red-600
-                                                                                                                               text-white px-4 py-2
-                                                                                                                               rounded-lg text-xs
-                                                                                                                               font-semibold shadow">
+                                                            @disabled(!$currentUser || !$currentUser->isAdmin())
+                                                            class="px-4 py-2 rounded-lg text-xs font-semibold shadow {{ $currentUser && $currentUser->isAdmin() ? 'bg-red-500 hover:bg-red-600 text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60' }}">
 
                                                             Hapus
 

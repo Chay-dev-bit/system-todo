@@ -147,8 +147,9 @@
 <?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
-          <form method="POST" action="<?php echo e(route('logout')); ?>" id="logout-form">
+        <form method="POST" action="<?php echo e(route('logout')); ?>">
             <?php echo csrf_field(); ?>
+
             <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => '#','id' => 'logout']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -172,39 +173,27 @@
 <?php endif; ?>
         </form>
     </div>
-
     <div class="p-6">
 
         
         <div class="items-center mb-6">
-
+            
             <div class="flex justify-between">
-
-                
+                <!-- tambah data -->
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($currentUser && $currentUser->isAdmin()): ?>
                     <button type="button" wire:click="showDataInput"
-                        class="bg-[#0070C0] hover:bg-blue-800
-                        text-white px-4 py-2 mb-4 rounded
-                        w-52 transition delay-150 duration-300
-                        ease-in-out hover:-translate-y-1 hover:scale-110">
-
+                        class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                         Tambah Data
-
                     </button>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-
-                
-                <input type="text" wire:model.debounce.500ms="search" placeholder="Search" class="w-72 rounded-lg border border-slate-300
-                       px-4 py-2 shadow-sm
-                       focus:ring-2 focus:ring-blue-500">
-
+                <input type="text" wire:model.live="search" placeholder="Search"
+                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
 
         </div>
 
 
-
-        <!-- ================= MODAL INPUT PENGGUNA ================= -->
+        <!-- ================= MODAL INPUT JABATAN ================= -->
         <?php if (isset($component)) { $__componentOriginal9f64f32e90b9102968f2bc548315018c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9f64f32e90b9102968f2bc548315018c = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.modal','data' => ['wire:model' => 'confirmInput']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -219,28 +208,28 @@
              <?php $__env->slot('title', null, []); ?> 
 
                 <span class="text-lg font-semibold text-black">
-                    Tambah Data Pengguna
+                    Tambah Data Jabatan
                 </span>
 
              <?php $__env->endSlot(); ?>
 
              <?php $__env->slot('content', null, []); ?> 
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4">
 
                     
                     <div wire:ignore>
 
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NIP']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'kantor_id','value' => 'KANTOR ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['value' => 'NIP']); ?>
+<?php $component->withAttributes(['for' => 'kantor_id','value' => 'KANTOR ID']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
@@ -252,19 +241,19 @@
 <?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
 <?php endif; ?>
 
-                        <select wire:model.live="nip" class="tom-select w-full rounded-lg border border-slate-300
+                        <select wire:model.defer="kantor_id" class="tom-select w-full rounded-lg border border-slate-300
                                px-4 py-2 shadow-sm
                                focus:ring-2 focus:ring-blue-500">
 
                             <option value="">
-                                -- Pilih Pegawai --
+                                -- Pilih Kantor --
                             </option>
 
-                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $pegawais; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pegawai): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $kantors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kantor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                <option value="<?php echo e($pegawai->nip); ?>">
+                                <option value="<?php echo e($kantor->id); ?>">
 
-                                    <?php echo e($pegawai->nip); ?> - <?php echo e($pegawai->nama); ?>
+                                    <?php echo e($kantor->id); ?> - <?php echo e($kantor->nama); ?>
 
 
                                 </option>
@@ -275,14 +264,14 @@
 
                         <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('nip')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('kantor_id')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-error'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('nip'))]); ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('kantor_id'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
@@ -297,18 +286,18 @@
                     </div>
 
                     
-                    <div>
+                    <div wire:ignore>
 
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'KANTOR ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'unit_id','value' => 'UNIT ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['value' => 'KANTOR ID']); ?>
+<?php $component->withAttributes(['for' => 'unit_id','value' => 'UNIT ID']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
@@ -320,479 +309,19 @@
 <?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
 <?php endif; ?>
 
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'kantor_id','readonly' => true]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA LENGKAP']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA LENGKAP']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_lengkap','readonly' => true]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA AWAL']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA AWAL']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_awal']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA AKHIR']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA AKHIR']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_akhir']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA PEMAKAI']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA PEMAKAI']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_pemakai','placeholder' => 'Masukkan Username']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('nama_pemakai')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-error'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('nama_pemakai'))]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    <!-- email -->
-                     <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'email','value' => 'EMAIL']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['for' => 'email','value' => 'EMAIL']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'email','wire:model.defer' => 'email']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('email')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-error'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('email'))]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    <!-- no wa -->
-                     <div>
-                            <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'no_wa','value' => 'NO WHATSAPP']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['for' => 'no_wa','value' => 'NO WHATSAPP']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                            <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['wire:model.live' => 'no_wa','id' => 'no_wa','type' => 'text','name' => 'no_wa','class' => 'block mt-1 w-full','placeholder' => '628123456789','maxlength' => '16']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                            <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('no_wa'),'class' => 'mt-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-error'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('no_wa')),'class' => 'mt-2']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-
-                        </div>
-                        
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'PASSWORD']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'PASSWORD']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'password','wire:model.defer' => 'password','placeholder' => 'Masukkan Password']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('password')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-error'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('password'))]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'ROLE']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'ROLE']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <select wire:model.defer="role_id" class="w-full rounded-lg border border-slate-300
+                        <select wire:model.defer="unit_id" class="tom-select w-full rounded-lg border border-slate-300
                                px-4 py-2 shadow-sm
                                focus:ring-2 focus:ring-blue-500">
 
                             <option value="">
-                                -- Pilih Role --
+                                -- Pilih Unit --
                             </option>
 
-                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                <option value="<?php echo e($role->id); ?>">
+                                <option value="<?php echo e($unit->id); ?>">
 
-                                    <?php echo e($role->name); ?>
+                                    <?php echo e($unit->id); ?> - <?php echo e($unit->unit_name); ?>
 
 
                                 </option>
@@ -803,14 +332,14 @@
 
                         <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('role_id')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('unit_id')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-error'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('role_id'))]); ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('unit_id'))]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
@@ -829,14 +358,14 @@
 
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'AKTIF']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'kode_jabatan','value' => 'ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['value' => 'AKTIF']); ?>
+<?php $component->withAttributes(['for' => 'kode_jabatan','value' => 'ID']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
@@ -848,18 +377,387 @@
 <?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
 <?php endif; ?>
 
-                        <select wire:model.defer="aktif" class="w-full rounded-lg border border-slate-300
-                               px-4 py-2 shadow-sm">
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'kode_jabatan','placeholder' => 'Masukkan ID Jabatan Max 6','maxlength' => '6']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
 
-                            <option value="1">
-                                Aktif
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('kode_jabatan')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('kode_jabatan'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'nama_jabatan','value' => 'NAMA JABATAN']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'nama_jabatan','value' => 'NAMA JABATAN']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_jabatan','placeholder' => 'Masukkan Nama Jabatan']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('nama_jabatan')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('nama_jabatan'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'tingkat','value' => 'TINGKAT']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'tingkat','value' => 'TINGKAT']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'tingkat','placeholder' => 'Masukkan Tingkat']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('tingkat')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('tingkat'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'kls_jab','value' => 'KLS JAB']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'kls_jab','value' => 'KLS JAB']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'kls_jab','placeholder' => 'Masukkan Kelas Jabatan']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('kls_jab')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('kls_jab'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'atasan_bid','value' => 'ATASAN BID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'atasan_bid','value' => 'ATASAN BID']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'atasan_bid','placeholder' => 'Masukkan Atasan Bidang']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('atasan_bid')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('atasan_bid'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div wire:ignore> 
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'atasan_jab','value' => 'ATASAN JAB']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'atasan_jab','value' => 'ATASAN JAB']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <select wire:model.defer="atasan_jab" class="tom-select w-full rounded-lg border border-slate-300
+                               px-4 py-2 shadow-sm
+                               focus:ring-2 focus:ring-blue-500">
+
+                            <option value="">
+                                -- Pilih Atasan Jabatan --
                             </option>
 
-                            <option value="0">
-                                Nonaktif
-                            </option>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $atasanJabatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $atasan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                <option value="<?php echo e($atasan->id); ?>">
+
+                                    <?php echo e($atasan->id); ?> - <?php echo e($atasan->nama_jabatan); ?>
+
+
+                                </option>
+
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
                         </select>
+
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('atasan_jab')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('atasan_jab'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
 
                     </div>
 
@@ -871,14 +769,14 @@
 
                 <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.secondary-button','data' => ['type' => 'button','wire:click.prevent' => 'closeModal']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.secondary-button','data' => ['wire:click' => 'closeModal']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('secondary-button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'button','wire:click.prevent' => 'closeModal']); ?>
+<?php $component->withAttributes(['wire:click' => 'closeModal']); ?>
 
                     Batal
 
@@ -895,14 +793,14 @@
 
                 <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => ['type' => 'button','wire:click.prevent' => 'save','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => ['wire:click' => 'save','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('primary-button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'button','wire:click.prevent' => 'save','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']); ?>
+<?php $component->withAttributes(['wire:click' => 'save','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']); ?>
 
                     Simpan Data
 
@@ -932,7 +830,7 @@
 
 
 
-        <!-- ================= MODAL EDIT PENGGUNA ================= -->
+        <!-- ================= MODAL EDIT JABATAN ================= -->
         <?php if (isset($component)) { $__componentOriginal9f64f32e90b9102968f2bc548315018c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9f64f32e90b9102968f2bc548315018c = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.modal','data' => ['wire:model' => 'confirmEdit']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -947,28 +845,28 @@
              <?php $__env->slot('title', null, []); ?> 
 
                 <span class="text-lg font-semibold text-black">
-                    Edit Data Pengguna
+                    Edit Data Jabatan
                 </span>
 
              <?php $__env->endSlot(); ?>
 
              <?php $__env->slot('content', null, []); ?> 
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4">
 
                     
-                    <div>
+                    <div wire:ignore>
 
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NIP']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'kantor_id','value' => 'KANTOR ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['value' => 'NIP']); ?>
+<?php $component->withAttributes(['for' => 'kantor_id','value' => 'KANTOR ID']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
@@ -980,478 +878,56 @@
 <?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
 <?php endif; ?>
 
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nip','disabled' => true]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'KANTOR ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'KANTOR ID']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'kantor_id','readonly' => true]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA LENGKAP']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA LENGKAP']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_lengkap']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA AWAL']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA AWAL']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_awal']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA AKHIR']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA AKHIR']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_akhir']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'NAMA PEMAKAI']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'NAMA PEMAKAI']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_pemakai']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    <!-- email -->
-                     <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'email','value' => 'EMAIL']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['for' => 'email','value' => 'EMAIL']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'email','wire:model.defer' => 'email']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('email')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-error'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('email'))]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    <!-- no wa -->
-                     <div>
-                            <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'no_wa','value' => 'NO WHATSAPP']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['for' => 'no_wa','value' => 'NO WHATSAPP']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                            <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['wire:model.live' => 'no_wa','id' => 'no_wa','type' => 'text','name' => 'no_wa','class' => 'block mt-1 w-full','placeholder' => '628123456789','maxlength' => '16']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                            <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('no_wa'),'class' => 'mt-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-error'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('no_wa')),'class' => 'mt-2']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
-<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
-<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
-<?php endif; ?>
-
-                        </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'PASSWORD BARU']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'PASSWORD BARU']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
-<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['type' => 'password','wire:model.defer' => 'password','placeholder' => 'Kosongkan jika tidak diubah']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
-<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
-<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
-<?php endif; ?>
-
-                    </div>
-
-                    
-                    <div>
-
-                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'ROLE']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['value' => 'ROLE']); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-
-                        <select wire:model.defer="role_id" class="w-full rounded-lg border border-slate-300
+                        <select wire:model.defer="kantor_id" class="tom-select w-full rounded-lg border border-slate-300
                                px-4 py-2 shadow-sm">
 
-                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $kantors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kantor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                <option value="<?php echo e($role->id); ?>">
+                                <option value="<?php echo e($kantor->id); ?>">
 
-                                    <?php echo e($role->name); ?>
+                                    <?php echo e($kantor->id); ?> - <?php echo e($kantor->nama); ?>
+
+
+                                </option>
+
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                        </select>
+
+                    </div>
+
+                    
+                    <div wire:ignore>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'unit_id','value' => 'UNIT ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'unit_id','value' => 'UNIT ID']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <select wire:model.defer="unit_id" class="tom-select w-full rounded-lg border border-slate-300
+                               px-4 py-2 shadow-sm">
+
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                <option value="<?php echo e($unit->id); ?>">
+
+                                    <?php echo e($unit->id); ?> - <?php echo e($unit->unit_name); ?>
 
 
                                 </option>
@@ -1467,14 +943,14 @@
 
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['value' => 'AKTIF']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'kode_jabatan','value' => 'ID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input-label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['value' => 'AKTIF']); ?>
+<?php $component->withAttributes(['for' => 'kode_jabatan','value' => 'ID']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
@@ -1486,16 +962,254 @@
 <?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
 <?php endif; ?>
 
-                        <select wire:model.defer="aktif" class="w-full rounded-lg border border-slate-300
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'kode_jabatan','disabled' => true,'maxlength' => true]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'nama_jabatan','value' => 'NAMA JABATAN']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'nama_jabatan','value' => 'NAMA JABATAN']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'nama_jabatan']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'tingkat','value' => 'TINGKAT']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'tingkat','value' => 'TINGKAT']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'tingkat']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'kls_jab','value' => 'KLS JAB']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'kls_jab','value' => 'KLS JAB']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'kls_jab']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'atasan_bid','value' => 'ATASAN BID']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'atasan_bid','value' => 'ATASAN BID']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <?php if (isset($component)) { $__componentOriginal786b6632e4e03cdf0a10e8880993f28a = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a = $attributes; } ?>
+<?php $component = App\View\Components\Input::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\Input::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'text','wire:model.defer' => 'atasan_bid']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $attributes = $__attributesOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__attributesOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a)): ?>
+<?php $component = $__componentOriginal786b6632e4e03cdf0a10e8880993f28a; ?>
+<?php unset($__componentOriginal786b6632e4e03cdf0a10e8880993f28a); ?>
+<?php endif; ?>
+
+                    </div>
+
+                    
+                    <div wire:ignore>
+
+                        <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => ['for' => 'atasan_jab','value' => 'ATASAN JAB']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-label'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['for' => 'atasan_jab','value' => 'ATASAN JAB']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
+<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
+<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
+<?php endif; ?>
+
+                        <select wire:model.defer="atasan_jab" class="tom-select w-full rounded-lg border border-slate-300
                                px-4 py-2 shadow-sm">
 
-                            <option value="1">
-                                Aktif
-                            </option>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $atasanJabatan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $atasan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                            <option value="0">
-                                Nonaktif
-                            </option>
+                                <option value="<?php echo e($atasan->id); ?>">
+
+                                    <?php echo e($atasan->id); ?> - <?php echo e($atasan->nama_jabatan); ?>
+
+
+                                </option>
+
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
                         </select>
 
@@ -1509,14 +1223,14 @@
 
                 <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.secondary-button','data' => ['type' => 'button','wire:click.prevent' => 'closeModal']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.secondary-button','data' => ['wire:click' => 'closeModal']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('secondary-button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'button','wire:click.prevent' => 'closeModal']); ?>
+<?php $component->withAttributes(['wire:click' => 'closeModal']); ?>
 
                     Batal
 
@@ -1533,14 +1247,14 @@
 
                 <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => ['type' => 'button','wire:click.prevent' => 'update','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => ['wire:click' => 'update','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('primary-button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'button','wire:click.prevent' => 'update','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']); ?>
+<?php $component->withAttributes(['wire:click' => 'update','class' => 'ml-2 bg-[#0070C0] hover:bg-[#005B9F]']); ?>
 
                     Update Data
 
@@ -1568,8 +1282,6 @@
 <?php unset($__componentOriginal9f64f32e90b9102968f2bc548315018c); ?>
 <?php endif; ?>
 
-
-
         
         <div class="rounded-2xl overflow-hidden">
 
@@ -1581,49 +1293,60 @@
                     <thead class="bg-[#0070C0] text-white">
 
                         <tr class="text-sm uppercase tracking-wide">
-
-                            <th class="px-6 py-4 text-left">
-                                NIP
+                            <th class="px-6 py-4 text-left min-w-[150px]">
+                                Kantor ID
                             </th>
 
-                            <th class="px-6 py-4 text-left">
-                                NAMA LENGKAP
+                            <th class="px-6 py-4 text-left w-[120px]">
+                                Unit ID
                             </th>
 
-                            <th class="px-6 py-4 text-left">
-                                USERNAME
+                            <th class="px-6 py-4 text-left w-[100px]">
+                                ID
                             </th>
 
-                            <th class="px-6 py-4 text-left">
-                                EMAIL
+                            <th class="px-6 py-4 text-left min-w-[300px]">
+                                Nama Jabatan
                             </th>
 
-                            <th class="px-6 py-4 text-left">
-                                NO WA
+                            <th class="px-6 py-4 text-center w-[100px]">
+                                Tingkat
                             </th>
 
-                            <th class="px-6 py-4 text-left">
-                                ROLE
+                            <th class="px-6 py-4 text-center w-[100px]">
+                                Kls Jab
                             </th>
 
-                            <th class="px-6 py-4 text-center">
-                                STATUS
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Atasan Bid
                             </th>
 
-                            <th class="px-6 py-4 text-left">
-                                CREATED BY
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Atasan Jab
                             </th>
 
-                            <th class="px-6 py-4 text-left">
-                                CREATED DATE
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Created Date
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[180px]">
-                                Last Login
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Created By
+                            </th>
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Modified Date
+                            </th>
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Modified By
+                            </th>
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Approved By
+                            </th>
+                            <th class="px-6 py-4 text-left w-[150px]">
+                                Approved Date
                             </th>
 
-                            <th class="px-6 py-4 text-center">
-                                ACTION
+                            <th class="px-6 py-4 text-center w-[180px]">
+                                Action
                             </th>
 
                         </tr>
@@ -1633,152 +1356,117 @@
                     
                     <tbody class="bg-white divide-y divide-slate-200">
 
-                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $penggunas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pengguna): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $jabatans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jabatan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
-                                            <tr class="hover:bg-blue-50 transition duration-200">
-
-                                                
-                                                <td class="px-6 py-4 font-semibold text-slate-700">
-
-                                                    <?php echo e($pengguna->nip); ?>
+                            <tr class="hover:bg-blue-50 transition duration-200">
 
 
-                                                </td>
+                                <td class="px-6 py-4">
+                                    <?php echo e($jabatan->kantor_id); ?>
 
-                                                
-                                                <td class="px-6 py-4">
+                                </td>
 
-                                                    <?php echo e($pengguna->nama_lengkap); ?>
+                                <td class="px-6 py-4">
+                                    <?php echo e($jabatan->unit_id); ?>
 
+                                </td>
 
-                                                </td>
+                                <td class="px-6 py-4 font-semibold text-slate-700">
+                                    <?php echo e($jabatan->id); ?>
 
-                                                
-                                                <td class="px-6 py-4">
+                                </td>
 
-                                                    <?php echo e($pengguna->nama_pemakai); ?>
+                                <td class="px-6 py-4">
 
+                                    <div class="font-semibold text-slate-800 leading-relaxed">
+                                        <?php echo e($jabatan->nama_jabatan); ?>
 
-                                                </td>
-                                                
-                                                <td class="px-6 py-4">
+                                    </div>
 
-                                                    <?php echo e($pengguna->email); ?>
+                                </td>
 
+                                <td class="px-6 py-4 text-center">
+                                    <?php echo e($jabatan->tingkat); ?>
 
-                                                </td>
+                                </td>
 
-                                                
-                                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 text-center">
+                                    <?php echo e($jabatan->kls_jab); ?>
 
-                                                    <?php echo e($pengguna->no_wa); ?>
+                                </td>
 
+                                <td class="px-6 py-4">
+                                    <?php echo e($jabatan->atasan_bid); ?>
 
-                                                </td>
+                                </td>
 
-                                                
-                                                <td class="px-6 py-4">
+                                <td class="px-6 py-4">
+                                    <?php echo e($jabatan->atasan_jab); ?>
 
-                                                    <?php echo e($pengguna->role->name ?? '-'); ?>
+                                </td>
 
+                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
 
-                                                </td>
-
-                                                
-                                                <td class="px-6 py-4 text-center">
-
-                                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($pengguna->aktif == '1'): ?>
-
-                                                        <span class="bg-green-100 text-green-700
-                                                                                                 px-3 py-1 rounded-full
-                                                                                                 text-xs font-semibold">
-
-                                                            Aktif
-
-                                                        </span>
-
-                                                    <?php else: ?>
-
-                                                        <span class="bg-red-100 text-red-700
-                                                                                                 px-3 py-1 rounded-full
-                                                                                                 text-xs font-semibold">
-
-                                                            Nonaktif
-
-                                                        </span>
-
-                                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-
-                                                </td>
-
-                                                
-                                                <td class="px-6 py-4">
-
-                                                    <?php echo e($pengguna->created_by); ?>
+                                    <?php echo e(\Carbon\Carbon::parse($jabatan->created_date)->format('d M Y H:i:s')); ?>
 
 
-                                                </td>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <?php echo e($jabatan->created_by); ?>
 
-                                                
-                                                <td class="px-6 py-4 whitespace-nowrap text-slate-500">
+                                </td>
 
-                                                    <?php echo e($pengguna->created_date
-                            ? \Carbon\Carbon::parse($pengguna->created_date)->format('d M Y H:i:s')
-                            : '-'); ?>
+                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
 
-
-                                                </td>
-
-                                                <!-- last login -->
-                                                 <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
-
-                                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($pengguna->last_login): ?>
-
-                                                        <?php echo e(\Carbon\Carbon::parse(
-                                                            $pengguna->last_login
-                                                        )->format('d M Y H:i')); ?>
+                                    <?php echo e(\Carbon\Carbon::parse($jabatan->modified_date)->format('d M Y H:i:s')); ?>
 
 
-                                                    <?php else: ?>
-                                                        Belum Pernah Login
-                                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <?php echo e($jabatan->modified_by); ?>
 
-                                                </td>
+                                </td>
 
-                                                
-                                                <td class="px-6 py-4">
 
-                                                    <div class="flex justify-center gap-2">
+                                <td class="px-6 py-4">
+                                    <?php echo e($jabatan->approved_by); ?>
 
-                                                        
-                                                        <button wire:click="edit('<?php echo e($pengguna->nip); ?>')"
-                                                            <?php if(!$currentUser || !$currentUser->isAdmin()): echo 'disabled'; endif; ?>
-                                                            class="px-4 py-2 rounded-lg text-xs font-semibold shadow <?php echo e($currentUser && $currentUser->isAdmin() ? 'bg-[#0070C0] hover:bg-[#005B9F] text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60'); ?>">
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
 
-                                                            Edit
+                                    <?php echo e(\Carbon\Carbon::parse($jabatan->approved_date)->format('d M Y H:i:s')); ?>
 
-                                                        </button>
 
-                                                        
-                                                        <button wire:click="confirmDelete('<?php echo e($pengguna->nip); ?>')"
-                                                            <?php if(!$currentUser || !$currentUser->isAdmin()): echo 'disabled'; endif; ?>
-                                                            class="px-4 py-2 rounded-lg text-xs font-semibold shadow <?php echo e($currentUser && $currentUser->isAdmin() ? 'bg-red-500 hover:bg-red-600 text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60'); ?>">
+                                </td>
 
-                                                            Hapus
+                                
+                                <td class="px-6 py-4">
 
-                                                        </button>
+                                    <div class="flex justify-center gap-2">
 
-                                                    </div>
+                                        <button wire:click="edit('<?php echo e($jabatan->id); ?>')"
+                                            <?php if(!$currentUser || !$currentUser->isAdmin()): echo 'disabled'; endif; ?>
+                                            class="px-4 py-2 rounded-lg text-xs font-semibold shadow <?php echo e($currentUser && $currentUser->isAdmin() ? 'bg-[#0070C0] hover:bg-[#005B9F] text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60'); ?>">
+                                            Edit
+                                        </button>
 
-                                                </td>
+                                        <button wire:click="confirmDelete('<?php echo e($jabatan->id); ?>')"
+                                            <?php if(!$currentUser || !$currentUser->isAdmin()): echo 'disabled'; endif; ?>
+                                            class="px-4 py-2 rounded-lg text-xs font-semibold shadow <?php echo e($currentUser && $currentUser->isAdmin() ? 'bg-red-500 hover:bg-red-600 text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60'); ?>">
+                                            Hapus
+                                        </button>
 
-                                            </tr>
+                                    </div>
+
+                                </td>
+
+                            </tr>
 
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
                             <tr>
 
-                                <td colspan="8" class="text-center py-10 text-slate-500">
+                                <td colspan="9" class="text-center py-10 text-slate-500">
 
                                     Data tidak ditemukan
 
@@ -1796,28 +1484,20 @@
 
         </div>
 
-
-
         
-        <div class="flex items-center gap-2 mt-4">
+        <div class="flex items-center gap-2">
 
             <label class="text-sm text-slate-600">
                 Show
             </label>
 
             <select wire:model.live="perPage" class="border border-slate-300 rounded-md
-                   px-2 py-2 text-sm">
-
+               px-2 py-2 text-sm">
                 <option value="5">5</option>
-
                 <option value="10">10</option>
-
                 <option value="25">25</option>
-
                 <option value="50">50</option>
-
                 <option value="999999">All</option>
-
             </select>
 
             <label class="text-sm text-slate-600">
@@ -1827,4 +1507,5 @@
         </div>
 
     </div>
-</div><?php /**PATH D:\app\system-todo\resources\views/livewire/employed/pengguna.blade.php ENDPATH**/ ?>
+
+</div><?php /**PATH D:\app\system-todo\resources\views/livewire/employed/jabatan.blade.php ENDPATH**/ ?>

@@ -137,6 +137,10 @@ class Pengguna extends Component
 
     public function showDataInput()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data pengguna');
+            return;
+        }
         $this->resetForm();
 
         $this->confirmInput = true;
@@ -177,6 +181,11 @@ class Pengguna extends Component
 
         $kantors = KantorModel::orderBy('nama')->get();
 
+        $user = auth()->user();
+        if ($user && !$user->relationLoaded('role')) {
+            $user->load('role');
+        }
+
         return view('livewire.employed.pengguna', [
 
             'penggunas' => $penggunas,
@@ -186,6 +195,7 @@ class Pengguna extends Component
             'roles' => $roles,
 
             'kantors' => $kantors,
+            'currentUser' => $user,
 
         ])->layout('layouts.app');
     }
@@ -198,6 +208,10 @@ class Pengguna extends Component
 
     public function save()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data pengguna');
+            return;
+        }
         // Format no_wa sebelum validasi
         $this->no_wa = preg_replace('/[^0-9]/', '', $this->no_wa);
         $this->no_wa = preg_replace('/^0/', '62', $this->no_wa);
@@ -276,6 +290,10 @@ class Pengguna extends Component
 
     public function edit($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data pengguna');
+            return;
+        }
         $pengguna = PenggunaModel::findOrFail($id);
 
         $this->pengguna_id = $pengguna->nip;
@@ -311,6 +329,10 @@ class Pengguna extends Component
 
     public function update()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data pengguna');
+            return;
+        }
         // Format no_wa sebelum validasi
         $this->no_wa = preg_replace('/[^0-9]/', '', $this->no_wa);
         $this->no_wa = preg_replace('/^0/', '62', $this->no_wa);
@@ -406,6 +428,10 @@ class Pengguna extends Component
 
     public function delete($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menghapus data pengguna');
+            return;
+        }
         try {
 
             PenggunaModel::findOrFail($id)->delete();

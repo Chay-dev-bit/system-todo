@@ -84,6 +84,10 @@ class Jabatan extends Component
 
     public function showDataInput()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data jabatan');
+            return;
+        }
         $this->resetForm();
 
         $this->confirmInput = true;
@@ -129,6 +133,11 @@ class Jabatan extends Component
         // dropdown atasan jabatan
         $atasanJabatan = JabatanModel::orderBy('nama_jabatan')->get();
 
+        $user = auth()->user();
+        if ($user && !$user->relationLoaded('role')) {
+            $user->load('role');
+        }
+
         return view('livewire.employed.jabatan', [
 
             'jabatans' => $jabatans,
@@ -138,6 +147,7 @@ class Jabatan extends Component
             'units' => $units,
 
             'atasanJabatan' => $atasanJabatan,
+            'currentUser' => $user,
 
         ])->layout('layouts.app');
     }
@@ -150,6 +160,11 @@ class Jabatan extends Component
 
     public function save()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data jabatan');
+            return;
+        }
+
         $this->validate([
 
             'kantor_id' => 'required|exists:kantor,id',
@@ -229,6 +244,10 @@ class Jabatan extends Component
 
     public function edit($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data jabatan');
+            return;
+        }
         $jabatan = JabatanModel::findOrFail($id);
 
         $this->jabatan_id = $jabatan->id;
@@ -266,6 +285,11 @@ class Jabatan extends Component
 
     public function update()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data jabatan');
+            return;
+        }
+
         $this->validate([
 
             'kantor_id' => 'required|exists:kantor,id',
@@ -359,6 +383,10 @@ class Jabatan extends Component
 
     public function delete($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menghapus data jabatan');
+            return;
+        }
         try {
 
             JabatanModel::findOrFail($id)->delete();

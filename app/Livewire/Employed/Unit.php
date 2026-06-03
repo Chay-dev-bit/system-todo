@@ -78,6 +78,10 @@ class Unit extends Component
 
     public function showDataInput()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data unit');
+            return;
+        }
         $this->resetForm();
 
         $this->confirmInput = true;
@@ -117,11 +121,17 @@ class Unit extends Component
         // dropdown kantor
         $kantors = KantorModel::orderBy('nama')->get();
 
+        $user = auth()->user();
+        if ($user && !$user->relationLoaded('role')) {
+            $user->load('role');
+        }
+
         return view('livewire.employed.unit', [
 
             'units' => $units,
 
             'kantors' => $kantors,
+            'currentUser' => $user,
 
         ])->layout('layouts.app');
     }
@@ -134,6 +144,10 @@ class Unit extends Component
 
     public function save()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data unit');
+            return;
+        }
         $this->validate([
 
             'kantor_id' => 'required|max:5|exists:kantor,id',
@@ -190,6 +204,10 @@ class Unit extends Component
 
     public function edit($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data unit');
+            return;
+        }
         $unit = UnitModel::findOrFail($id);
 
         $this->unit_id = $unit->id;
@@ -219,6 +237,10 @@ class Unit extends Component
 
     public function update()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data unit');
+            return;
+        }
         $this->validate([
 
             'kantor_id' => 'required|max:5|exists:kantor,id',
@@ -291,6 +313,10 @@ class Unit extends Component
 
     public function delete($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menghapus data unit');
+            return;
+        }
         try {
 
             UnitModel::findOrFail($id)->delete();

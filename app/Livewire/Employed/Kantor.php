@@ -35,6 +35,10 @@ class Kantor extends Component
     // untuk menampilkan modal input
     public function showDataInput()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data kantor');
+            return;
+        }
         $this->resetForm();
         $this->confirmInput = true;
     }
@@ -57,12 +61,23 @@ class Kantor extends Component
             })
             ->paginate($this->perPage);
 
+        $user = auth()->user();
+        if ($user && !$user->relationLoaded('role')) {
+            $user->load('role');
+        }
+
         return view('livewire.employed.kantor', [
-            'kantors' => $kantors
+            'kantors' => $kantors,
+            'currentUser' => $user
         ])->layout('layouts.app');
     }
     public function save()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menambah data kantor');
+            return;
+        }
+
         $this->validate([
             'kode_kantor' => 'required|max:5|unique:kantor,id',
             'nama' => 'required|max:50',
@@ -96,6 +111,10 @@ class Kantor extends Component
 
     public function edit($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data kantor');
+            return;
+        }
         $kantor = KantorModel::findOrFail($id);
 
         $this->kantor_id = $kantor->id;
@@ -113,6 +132,11 @@ class Kantor extends Component
 
     public function update()
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk mengubah data kantor');
+            return;
+        }
+
         $this->validate([
             'kode_kantor' => 'required|max:5|unique:kantor,id,' . $this->kantor_id,
             'nama' => 'required|max:50',
@@ -156,6 +180,10 @@ class Kantor extends Component
     }
     public function delete($id)
     {
+        if (!auth()->user()->isAdmin()) {
+            session()->flash('error', 'Anda tidak memiliki akses untuk menghapus data kantor');
+            return;
+        }
         $kantor = KantorModel::findOrFail($id);
         $kantor->delete();
         session()->flash(

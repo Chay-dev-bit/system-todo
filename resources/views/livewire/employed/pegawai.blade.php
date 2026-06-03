@@ -37,10 +37,12 @@
             {{-- SEARCH --}}
             <div class="flex justify-between">
                 <!-- tambah data -->
-                <button type="button" wire:click="showDataInput"
-                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-                    Tambah Data
-                </button>
+                @if($currentUser && $currentUser->isAdmin())
+                    <button type="button" wire:click="showDataInput"
+                        class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                        Tambah Data
+                    </button>
+                @endif
                 <input type="text" wire:model.live="search" placeholder="Search"
                     class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
@@ -911,21 +913,21 @@
 
                                                     <div class="flex justify-center gap-2">
 
-                                                        <button wire:click="edit('{{ $pegawai->nip }}')" class="bg-[#0070C0] hover:bg-[#005B9F]
-                                                                   text-white px-4 py-2
-                                                                   rounded-lg text-xs
-                                                                   font-semibold shadow">
+                                                        <div class="flex justify-center gap-2">
 
-                                                            Edit
+                                                            <button wire:click="edit('{{ $pegawai->nip }}')"
+                                                                @disabled(!$currentUser || !$currentUser->isAdmin())
+                                                                class="px-4 py-2 rounded-lg text-xs font-semibold shadow {{ $currentUser && $currentUser->isAdmin() ? 'bg-[#0070C0] hover:bg-[#005B9F] text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60' }}">
+                                                                Edit
+                                                            </button>
 
-                                                        </button>
+                                                            <button wire:click="confirmDelete('{{ $pegawai->nip }}')"
+                                                                @disabled(!$currentUser || !$currentUser->isAdmin())
+                                                                class="px-4 py-2 rounded-lg text-xs font-semibold shadow {{ $currentUser && $currentUser->isAdmin() ? 'bg-red-500 hover:bg-red-600 text-white cursor-pointer' : 'bg-gray-400 text-gray-600 cursor-not-allowed opacity-60' }}">
+                                                                Hapus
+                                                            </button>
 
-                                                        <button wire:click="confirmDelete('{{ $pegawai->nip }}')" class="bg-red-500 hover:bg-red-600
-                                                                   text-white px-4 py-2
-                                                                   rounded-lg text-xs
-                                                                   font-semibold shadow">
-                                                            Hapus
-                                                        </button>
+                                                        </div>
 
                                                     </div>
 
