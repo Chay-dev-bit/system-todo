@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <x-nav-link :href="route('dashboard')">
             Dashboard
         </x-nav-link>
@@ -29,21 +29,28 @@
             </x-nav-link>
         </form>
     </div>
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
 
         {{-- HEADER --}}
         <div class="items-center mb-6">
             {{-- SEARCH --}}
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <!-- tambah data -->
+<<<<<<< HEAD
                 @if($currentUser && $currentUser->isAdmin())
                     <button type="button" wire:click="showDataInput"
                         class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                         Tambah Data
                     </button>
                 @endif
+=======
+                <button type="button" wire:click="showDataInput"
+                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 rounded-lg w-full sm:w-52 transition duration-300">
+                    Tambah Data
+                </button>
+>>>>>>> e8250aad06b8b76b46f65ddca4705b369a25614b
                 <input type="text" wire:model.live="search" placeholder="Search"
-                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
 
         </div>
@@ -62,7 +69,7 @@
 
             <x-slot name="content">
 
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
 
                     {{-- KANTOR ID --}}
                     <div wire:ignore>
@@ -243,7 +250,7 @@
 
             <x-slot name="content">
 
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
 
                     {{-- KANTOR ID --}}
                     <div wire:ignore>
@@ -379,69 +386,69 @@
         </x-modal>
 
         {{-- TABLE --}}
-        <div class="rounded-2xl overflow-hidden">
+        <div class="rounded-2xl overflow-hidden bg-white shadow">
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto w-full">
 
-                <table class="w-full border-collapse">
+                <table class="min-w-[1000px] w-full border-collapse text-sm">
 
                     {{-- HEADER --}}
                     <thead class="bg-[#0070C0] text-white">
 
                         <tr class="text-sm uppercase tracking-wide">
-                            <th class="px-6 py-4 text-left min-w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left min-w-[150px]">
                                 Kantor ID
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[120px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[120px]">
                                 Unit ID
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[100px]">
                                 ID
                             </th>
 
-                            <th class="px-6 py-4 text-left min-w-[300px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left min-w-[300px]">
                                 Nama Jabatan
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Tingkat
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Kls Jab
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Atasan Bid
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Atasan Jab
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Created Date
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Created By
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Modified Date
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Modified By
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Approved By
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Approved Date
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[180px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[180px]">
                                 Action
                             </th>
 
@@ -567,7 +574,7 @@
         </div>
 
         {{-- PAGINATION --}}
-        <div class="flex items-center gap-2">
+        <div class="flex flex-col sm:flex-row items-center gap-2 mt-4">
 
             <label class="text-sm text-slate-600">
                 Show

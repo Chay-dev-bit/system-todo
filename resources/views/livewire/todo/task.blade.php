@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <x-nav-link :href="route('dashboard')">
             Dashboard
         </x-nav-link>
@@ -16,7 +16,7 @@
             </x-nav-link>
         </form>
     </div>
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
         <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <h2 class="text-2xl font-bold text-blue-800">{{ $project->project_name }}</h2>
             <p class="text-sm text-slate-600 mt-1">{{ $project->description }}</p>
@@ -35,7 +35,7 @@
         @endif
 
         <div class="items-center mb-6">
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
 
                 @if(
                     auth()->user()?->nip === $project->pic_id
@@ -48,7 +48,7 @@
                     <button
                         type="button"
                         wire:click="showDataInput"
-                        class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                        class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
 
                         Tambah Task
 
@@ -60,7 +60,7 @@
                     type="text"
                     wire:model.live="search"
                     placeholder="Search"
-                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
         </div>
 
@@ -72,7 +72,7 @@
                 </span>
             </x-slot>
             <x-slot name="content">
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
                     <div>
                         <x-input-label for="title" value="NAMA TASK" />
                         <x-input type="text" wire:model.defer="title" placeholder="Masukkan Nama Task" />
@@ -87,7 +87,7 @@
                         <x-input-error :messages="$errors->get('description')" />
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div wire:ignore>
                             <x-input-label for="assigned_to" value="DI ASSIGN KE" />
                             <select wire:model.defer="assigned_to"
@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <x-input-label for="priority" value="PRIORITAS" />
                             <select wire:model.defer="priority"
@@ -135,7 +135,7 @@
                 </span>
             </x-slot>
             <x-slot name="content">
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
                     <div>
                         <x-input-label for="title" value="NAMA TASK" />
                         <x-input type="text" wire:model.defer="title" placeholder="Masukkan Nama Task" />
@@ -150,7 +150,7 @@
                         <x-input-error :messages="$errors->get('description')" />
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <x-input-label for="assigned_to" value="DI ASSIGN KE" />
                             <select wire:model.defer="assigned_to"
@@ -166,7 +166,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <x-input-label for="priority" value="PRIORITAS" />
                             <select wire:model.defer="priority"
@@ -551,17 +551,17 @@
                 <table class="w-full border-collapse">
                     <thead class="bg-[#0070C0] text-white">
                         <tr class="text-sm uppercase tracking-wide">
-                            <th class="px-6 py-4 text-left">No</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Nama Task</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 350px;">Deskripsi</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 150px;">Assigned To</th>
-                            <th class="px-6 py-4 text-left">Prioritas</th>
-                            <th class="px-6 py-4 text-left">Upload File</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Tanggal Upload</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 150px;">Status</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Verified By</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Approved By</th>
-                            <th class="px-6 py-4 text-center" style="min-width: 450px;">Action</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">No</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Nama Task</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 350px;">Deskripsi</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 150px;">Assigned To</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Prioritas</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Upload File</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Tanggal Upload</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 150px;">Status</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Verified By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Approved By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center" style="min-width: 450px;">Action</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-slate-200">
@@ -570,11 +570,11 @@
                                     $isCancelled = $task->status === 'cancelled';
                                 @endphp
                             <tr class="hover:bg-blue-50 transition duration-200">
-                                <td class="px-6 py-4">{{ $tasks->firstItem() + $key }}</td>
-                                <td class="px-6 py-4 font-semibold text-slate-800">{{ $task->title }}</td>
-                                <td class="px-6 py-4">{{ Str::limit($task->description, 100) }}</td>
-                                <td class="px-6 py-4">{{ $task->assignee->nama_lengkap ?? '-' }}</td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ $tasks->firstItem() + $key }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-800">{{ $task->title }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ Str::limit($task->description, 100) }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ $task->assignee->nama_lengkap ?? '-' }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <span class="px-2 py-1 text-xs rounded-full 
                                         @if($task->priority == 'low') bg-green-100 text-green-800 
                                         @elseif($task->priority == 'medium') bg-yellow-100 text-yellow-800 
@@ -582,7 +582,7 @@
                                         {{ ucfirst($task->priority) }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <div class="flex items-center gap-2">
                                        @if(!$isCancelled && in_array($task->status, [ 'in_progress', 'rejected' ]) &&
                                          $task->assigned_to == auth()->user()->nip )
@@ -592,14 +592,14 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     @if($task->submitted_at)
                                         {{ \Carbon\Carbon::parse($task->submitted_at)->format('d-m-Y H:i') }}
                                     @else
                                         <span class="text-slate-400 text-sm">-</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <div class="space-y-1">
                                       <span class="px-2 py-1 text-xs rounded-full inline-block
 
@@ -655,7 +655,7 @@
                                     @endif
                                    </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     @if($task->verifier)
                                         <div>{{ $task->verifier->nama_lengkap }}</div>
                                         <div class="text-xs text-slate-500">{{ $task->verified_at ? \Carbon\Carbon::parse($task->verified_at)->format('d M Y H:i') : '-' }}</div>
@@ -663,7 +663,7 @@
                                         -
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     @if($task->approver)
                                         <div>{{ $task->approver->nama_lengkap }}</div>
                                         <div class="text-xs text-slate-500">{{ $task->approved_at ? \Carbon\Carbon::parse($task->approved_at)->format('d M Y H:i') : '-' }}</div>
@@ -671,7 +671,7 @@
                                         -
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <div class="flex justify-center items-center gap-2 flex-nowrap">
                                         <button
                                             wire:click="showTracker({{ $task->id }})"
@@ -814,7 +814,7 @@
         </div>
 
         {{-- PAGINATION --}}
-        <div class="flex items-center justify-between mt-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
             <div class="flex items-center gap-2">
                 <label class="text-sm text-slate-600">Show</label>
                 <select wire:model.live="perPage" class="border border-slate-300 rounded-md px-2 py-2 text-sm">
