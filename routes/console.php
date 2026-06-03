@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('todo:send-daily-task-reminders')
-    ->dailyAt('12:36');
+    ->dailyAt('07:00');

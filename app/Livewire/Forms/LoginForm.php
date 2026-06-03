@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
+use App\Models\Pengguna;
 use Livewire\Form;
 
 class LoginForm extends Form
@@ -62,9 +63,6 @@ class LoginForm extends Form
         |--------------------------------------------------------------------------
         | DETEKSI LOGIN
         |--------------------------------------------------------------------------
-        | Jika format email -> login pakai email
-        | Jika bukan -> login pakai nip
-        |--------------------------------------------------------------------------
         */
 
         $field = filter_var(
@@ -73,6 +71,41 @@ class LoginForm extends Form
         )
             ? 'email'
             : 'nip';
+
+        /*
+        |--------------------------------------------------------------------------
+        | CEK USER
+        |--------------------------------------------------------------------------
+        */
+
+        $user = Pengguna::where(
+            $field,
+            $this->login
+        )->first();
+
+        // akun tidak ditemukan
+        if (!$user) {
+
+            RateLimiter::hit(
+                $this->throttleKey()
+            );
+
+            throw ValidationException::withMessages([
+
+                'form.login' => 'Akun tidak ditemukan.',
+
+            ]);
+        }
+
+        // akun nonaktif
+        if ($user->aktif != '1') {
+
+            throw ValidationException::withMessages([
+
+                'form.login' => 'Akun kamu tidak aktif, silahkan hubungi admin.',
+
+            ]);
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -87,8 +120,6 @@ class LoginForm extends Form
 
                 'password' => $this->password,
 
-                'aktif' => '1',
-
             ], $this->remember)
         ) {
 
@@ -98,7 +129,7 @@ class LoginForm extends Form
 
             throw ValidationException::withMessages([
 
-                'form.login' => trans('auth.failed'),
+                'form.login' => 'Password salah.',
 
             ]);
         }
@@ -114,7 +145,9 @@ class LoginForm extends Form
         );
 
         auth()->user()->update([
+
             'last_login' => now(),
+
         ]);
     }
 

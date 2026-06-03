@@ -199,15 +199,6 @@ new #[Layout('layouts.guest')] class extends Component {
 
                     </label>
 
-                    @if (Route::has('password.request'))
-
-                        <a href="{{ route('password.request') }}" class="text-cyan-400 hover:text-cyan-300 transition"
-                            wire:navigate>
-                            Lupa Password?
-                        </a>
-
-                    @endif
-
                 </div>
 
                 <!-- Button -->
