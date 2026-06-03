@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('dashboard')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -173,25 +173,24 @@
         </form>
     </div>
 
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
 
         
         <div class="items-center mb-6">
 
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
 
                 
                 <button type="button" wire:click="showDataInput" class="bg-[#0070C0] hover:bg-blue-800
-                       text-white px-4 py-2 mb-4 rounded
-                       w-52 transition delay-150 duration-300
-                       ease-in-out hover:-translate-y-1 hover:scale-110">
+                       text-white px-4 py-2 rounded-lg
+                       w-full sm:w-52 transition duration-300">
 
                     Tambah Data
 
                 </button>
 
                 
-                <input type="text" wire:model.debounce.500ms="search" placeholder="Search" class="w-72 rounded-lg border border-slate-300
+                <input type="text" wire:model.debounce.500ms="search" placeholder="Search" class="w-full sm:w-72 rounded-lg border border-slate-300
                        px-4 py-2 shadow-sm
                        focus:ring-2 focus:ring-blue-500">
 
@@ -223,7 +222,7 @@
 
              <?php $__env->slot('content', null, []); ?> 
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
 
                     
                     <div wire:ignore>
@@ -951,7 +950,7 @@
 
              <?php $__env->slot('content', null, []); ?> 
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
 
                     
                     <div>
@@ -1568,11 +1567,11 @@
 
 
         
-        <div class="rounded-2xl overflow-hidden">
+        <div class="rounded-2xl overflow-hidden bg-white shadow">
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto w-full">
 
-                <table class="w-full border-collapse">
+                <table class="min-w-[1000px] w-full border-collapse text-sm">
 
                     
                     <thead class="bg-[#0070C0] text-white">
@@ -1798,7 +1797,7 @@
 
 
         
-        <div class="flex items-center gap-2 mt-4">
+        <div class="flex flex-col sm:flex-row items-center gap-2 mt-4">
 
             <label class="text-sm text-slate-600">
                 Show

@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('dashboard')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -88,7 +88,7 @@
 <?php endif; ?>
         </form>
     </div>
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
         <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
             <h2 class="text-2xl font-bold text-blue-800"><?php echo e($project->project_name); ?></h2>
             <p class="text-sm text-slate-600 mt-1"><?php echo e($project->description); ?></p>
@@ -109,7 +109,7 @@
         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
         <div class="items-center mb-6">
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
 
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(
                     auth()->user()?->nip === $project->pic_id
@@ -122,7 +122,7 @@
                     <button
                         type="button"
                         wire:click="showDataInput"
-                        class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                        class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
 
                         Tambah Task
 
@@ -134,7 +134,7 @@
                     type="text"
                     wire:model.live="search"
                     placeholder="Search"
-                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
         </div>
 
@@ -155,7 +155,7 @@
                 </span>
              <?php $__env->endSlot(); ?>
              <?php $__env->slot('content', null, []); ?> 
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
                     <div>
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
@@ -265,7 +265,7 @@
 <?php endif; ?>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div wire:ignore>
                             <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
@@ -320,7 +320,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
@@ -444,7 +444,7 @@
                 </span>
              <?php $__env->endSlot(); ?>
              <?php $__env->slot('content', null, []); ?> 
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
                     <div>
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
@@ -554,7 +554,7 @@
 <?php endif; ?>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
@@ -609,7 +609,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
@@ -1413,17 +1413,17 @@
                 <table class="w-full border-collapse">
                     <thead class="bg-[#0070C0] text-white">
                         <tr class="text-sm uppercase tracking-wide">
-                            <th class="px-6 py-4 text-left">No</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Nama Task</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 350px;">Deskripsi</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 150px;">Assigned To</th>
-                            <th class="px-6 py-4 text-left">Prioritas</th>
-                            <th class="px-6 py-4 text-left">Upload File</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Tanggal Upload</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 150px;">Status</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Verified By</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Approved By</th>
-                            <th class="px-6 py-4 text-center" style="min-width: 450px;">Action</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">No</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Nama Task</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 350px;">Deskripsi</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 150px;">Assigned To</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Prioritas</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Upload File</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Tanggal Upload</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 150px;">Status</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Verified By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Approved By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center" style="min-width: 450px;">Action</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-slate-200">
@@ -1432,11 +1432,11 @@
                                     $isCancelled = $task->status === 'cancelled';
                                 ?>
                             <tr class="hover:bg-blue-50 transition duration-200">
-                                <td class="px-6 py-4"><?php echo e($tasks->firstItem() + $key); ?></td>
-                                <td class="px-6 py-4 font-semibold text-slate-800"><?php echo e($task->title); ?></td>
-                                <td class="px-6 py-4"><?php echo e(Str::limit($task->description, 100)); ?></td>
-                                <td class="px-6 py-4"><?php echo e($task->assignee->nama_lengkap ?? '-'); ?></td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e($tasks->firstItem() + $key); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-800"><?php echo e($task->title); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e(Str::limit($task->description, 100)); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e($task->assignee->nama_lengkap ?? '-'); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <span class="px-2 py-1 text-xs rounded-full 
                                         <?php if($task->priority == 'low'): ?> bg-green-100 text-green-800 
                                         <?php elseif($task->priority == 'medium'): ?> bg-yellow-100 text-yellow-800 
@@ -1445,7 +1445,7 @@
 
                                     </span>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <div class="flex items-center gap-2">
                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(!$isCancelled && in_array($task->status, [ 'in_progress', 'rejected' ]) &&
                                          $task->assigned_to == auth()->user()->nip ): ?>
@@ -1455,7 +1455,7 @@
                                         <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->submitted_at): ?>
                                         <?php echo e(\Carbon\Carbon::parse($task->submitted_at)->format('d-m-Y H:i')); ?>
 
@@ -1463,7 +1463,7 @@
                                         <span class="text-slate-400 text-sm">-</span>
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <div class="space-y-1">
                                       <span class="px-2 py-1 text-xs rounded-full inline-block
 
@@ -1522,7 +1522,7 @@
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                    </div>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->verifier): ?>
                                         <div><?php echo e($task->verifier->nama_lengkap); ?></div>
                                         <div class="text-xs text-slate-500"><?php echo e($task->verified_at ? \Carbon\Carbon::parse($task->verified_at)->format('d M Y H:i') : '-'); ?></div>
@@ -1530,7 +1530,7 @@
                                         -
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($task->approver): ?>
                                         <div><?php echo e($task->approver->nama_lengkap); ?></div>
                                         <div class="text-xs text-slate-500"><?php echo e($task->approved_at ? \Carbon\Carbon::parse($task->approved_at)->format('d M Y H:i') : '-'); ?></div>
@@ -1538,7 +1538,7 @@
                                         -
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <div class="flex justify-center items-center gap-2 flex-nowrap">
                                         <button
                                             wire:click="showTracker(<?php echo e($task->id); ?>)"
@@ -1681,7 +1681,7 @@
         </div>
 
         
-        <div class="flex items-center justify-between mt-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
             <div class="flex items-center gap-2">
                 <label class="text-sm text-slate-600">Show</label>
                 <select wire:model.live="perPage" class="border border-slate-300 rounded-md px-2 py-2 text-sm">

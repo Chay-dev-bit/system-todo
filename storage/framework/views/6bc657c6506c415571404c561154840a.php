@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('dashboard')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -172,19 +172,19 @@
 <?php endif; ?>
         </form>
     </div>
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
 
         
         <div class="items-center mb-6">
             
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <!-- tambah data -->
                 <button type="button" wire:click="showDataInput"
-                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 rounded-lg w-full sm:w-52 transition duration-300">
                     Tambah Data
                 </button>
                 <input type="text" wire:model.live="search" placeholder="Search"
-                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
 
         </div>
@@ -1268,59 +1268,59 @@
 <?php unset($__componentOriginal9f64f32e90b9102968f2bc548315018c); ?>
 <?php endif; ?>
         
-        <div class="rounded-2xl overflow-hidden">
+        <div class="rounded-2xl overflow-hidden bg-white shadow">
 
             <div class="overflow-x-auto">
 
-                <table class="w-full border-collapse">
+                <table class="min-w-[1200px] w-full border-collapse text-sm">
 
                     
                     <thead class="bg-[#0070C0] text-white">
 
                         <tr class="text-sm uppercase tracking-wide">
 
-                            <th class="px-6 py-4 text-left w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 ID
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Nama
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[120px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Alamat
                             </th>
 
-                            <th class="px-6 py-4 text-left min-w-[300px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Kota
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center whitespace-nowrap">
                                 Telpon
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center whitespace-nowrap">
                                 Email
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Created Date
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Created By
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Modified Date
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Modified By
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 Kantor Induk
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[180px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center whitespace-nowrap">
                                 Action
                             </th>
 
@@ -1335,22 +1335,22 @@
 
                             <tr class="hover:bg-blue-50 transition duration-200">
 
-                                <td class="px-6 py-4 font-semibold text-slate-700">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-700">
                                     <?php echo e($kantor->id); ?>
 
                                 </td>
 
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php echo e($kantor->nama); ?>
 
                                 </td>
 
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php echo e($kantor->alamat); ?>
 
                                 </td>
 
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     <div class="font-semibold text-slate-800 leading-relaxed">
                                         <?php echo e($kantor->kota); ?>
@@ -1359,47 +1359,47 @@
 
                                 </td>
 
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 text-center">
                                     <?php echo e($kantor->telp); ?>
 
                                 </td>
 
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 text-center">
                                     <?php echo e($kantor->email); ?>
 
                                 </td>
 
 
-                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 text-slate-500 whitespace-nowrap">
 
                                     <?php echo e(\Carbon\Carbon::parse($kantor->created_date)->format('d M Y H:i:s')); ?>
 
 
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 text-center">
                                     <?php echo e($kantor->created_by); ?>
 
                                 </td>
 
-                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 text-slate-500 whitespace-nowrap">
 
                                     <?php echo e(\Carbon\Carbon::parse($kantor->modified_date)->format('d M Y H:i:s')); ?>
 
 
                                 </td>
-                                <td class="px-6 py-4 text-center">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 text-center">
                                     <?php echo e($kantor->modified_by); ?>
 
                                 </td>
 
 
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php echo e($kantor->kantor_induk); ?>
 
                                 </td>
 
                                 
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     <div class="flex justify-center gap-2">
 
@@ -1442,7 +1442,7 @@
         </div>
 
         
-        <div class="flex items-center gap-2">
+        <div class="flex flex-col sm:flex-row items-center gap-2 mt-4">
 
             <label class="text-sm text-slate-600">
                 Show

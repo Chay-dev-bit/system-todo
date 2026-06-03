@@ -19,27 +19,33 @@
     <!-- @powerGridStyles -->
 </head>
 
-<body class="font-sans antialiased">
-    <header>
-        <img src="<?php echo e(asset('images/Desain header sistem.png')); ?>" alt="Header Profile" width="100%">
+<body class="font-sans antialiased bg-gray-100">
+    <header class="w-full">
+        <!-- header image -->
+        <div class="w-full overflow-hidden">
+            <img src="<?php echo e(asset('images/Desain header sistem.png')); ?>" alt="Header Profile" width="100%">
+        </div>
         <div x-data="locationClock()" x-init="getLocation()"
             class="text-sm text-slate-700 font-medium flex justify-end mr-2">
 
             
-            <div class="font-semibold text-slate-800">
+            <div class="font-semibold text-slate-800 text-center sm:text-right">
 
             <?php echo e(auth()->user()->nama_lengkap ?? 'User'); ?>
 
 
-            </div><span class="mx-2">|</span>
-            <span x-text="location"></span>,
-            <span x-text="date"></span>
-
+            </div>
+            <span class="sm:inline">|</span>
+            <div class="flex flex-wrap justify-center sm:justify-end gap-1">
+                <span x-text="location"></span>
+                <span>,</span>
+                <span x-text="date"></span>
+            </div>
         </div>
     </header>
     <div class="min-h-screen">
         <!-- Page Content -->
-        <main>
+        <main class="w-full px-2 sm:px-4 md:px-6 py-3">
             <?php echo e($slot); ?>
 
         </main>

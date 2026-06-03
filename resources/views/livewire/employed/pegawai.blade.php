@@ -1,5 +1,5 @@
 <div>
-  <div class="flex items-center gap-2">
+  <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <x-nav-link :href="route('dashboard')">
             Dashboard
         </x-nav-link>
@@ -30,19 +30,19 @@
     </div>
 
 
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
 
          {{-- HEADER --}}
         <div class="items-center mb-6">
             {{-- SEARCH --}}
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
                 <!-- tambah data -->
                 <button type="button" wire:click="showDataInput"
-                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                     Tambah Data
                 </button>
                 <input type="text" wire:model.live="search" placeholder="Search"
-                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
 
             @if (session()->has('success'))
@@ -72,7 +72,7 @@
 
     <x-slot name="content">
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {{-- NIP --}}
             <div>
@@ -400,7 +400,7 @@
 
     <x-slot name="content">
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
             {{-- NIP --}}
             <div>
@@ -701,85 +701,85 @@
 
 </x-modal>
         {{-- TABLE --}}
-        <div class="rounded-2xl overflow-hidden">
+        <div class="rounded-2xl overflow-hidden bg-white shadow">
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto w-full">
 
-                <table class="w-full border-collapse">
+                <table class="min-w-[1200px] w-full border-collapse text-sm">
 
                     {{-- HEADER --}}
                     <thead class="bg-[#0070C0] text-white">
 
                         <tr class="text-sm uppercase tracking-wide">
 
-                            <th class="px-6 py-4 text-left w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[100px]">
                                 NIP
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[100px]">
                                 Nama
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[120px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[120px]">
                                 Tempat Lahir
                             </th>
 
-                            <th class="px-6 py-4 text-left min-w-[300px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left min-w-[300px]">
                                 Tanggal Lahir
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Jenis Kel
                             </th>
 
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Alamat
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Agama
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Status Perkawinan
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 No telepon
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Alamat Email
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 AKtif
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Kantor ID
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Unit ID
                             </th>
-                            <th class="px-6 py-4 text-center w-[100px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[100px]">
                                 Jabatan ID
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Created By
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Created Date
                             </th>
 
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Modified By
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Modified Date
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Approved By
                             </th>
-                            <th class="px-6 py-4 text-left w-[150px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left w-[150px]">
                                 Approved Date
                             </th>
-                            <th class="px-6 py-4 text-center w-[180px]">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center w-[180px]">
                                 Action
                             </th>
 
@@ -955,7 +955,7 @@
         </div>
 
         {{-- PAGINATION --}}
-        <div class="flex items-center gap-2">
+        <div class="flex flex-col sm:flex-row items-center gap-2 mt-4">
 
             <label class="text-sm text-slate-600">
                 Show

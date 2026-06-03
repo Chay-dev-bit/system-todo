@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <x-nav-link :href="route('dashboard')">
             Dashboard
         </x-nav-link>
@@ -13,17 +13,17 @@
             </x-nav-link>
         </form>
     </div>
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
         {{-- HEADER --}}
         <div class="items-center mb-6">
             {{-- SEARCH --}}
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <button type="button" wire:click="showDataInput"
-                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                     Tambah Project
                 </button>
                 <input type="text" wire:model.live="search" placeholder="Search"
-                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
         </div>
 
@@ -182,7 +182,7 @@
                 </span>
             </x-slot>
             <x-slot name="content">
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
                     {{-- KODE PROJECT --}}
                     <div>
                         <x-input-label for="kode_project" value="KODE PROJECT" />
@@ -207,7 +207,7 @@
                         <x-input-error :messages="$errors->get('description')" />
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {{-- START DATE --}}
                         <div>
                             <x-input-label for="start_date" value="TANGGAL MULAI" />
@@ -223,7 +223,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {{-- CAPEX / OPEX --}}
                         <div>
                             <x-input-label for="capex_or_opex" value="CAPEX / OPEX" />
@@ -244,7 +244,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {{-- BIAYA --}}
                         <div>
                             <x-input-label for="biaya_formatted" value="BIAYA" />
@@ -419,45 +419,45 @@
                     {{-- HEADER --}}
                     <thead class="bg-[#0070C0] text-white">
                         <tr class="text-sm uppercase tracking-wide">
-                            <th class="px-6 py-4 text-left">Kode Project</th>
-                            <th class="px-6 py-4 text-left">Nama Project</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 300px;">Deskripsi</th>
-                            <th class="px-6 py-4 text-left">Tanggal Mulai</th>
-                            <th class="px-6 py-4 text-left">Tanggal Selesai</th>
-                            <th class="px-6 py-4 text-left">Capex/Opex</th>
-                            <th class="px-6 py-4 text-left">Biaya</th>
-                            <th class="px-6 py-4 text-left">Vendor</th>
-                            <th class="px-6 py-4 text-left">PIC</th>
-                            <th class="px-6 py-4 text-left">Status</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Approval</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 200px;">Progress</th>
-                            <th class="px-6 py-4 text-left">Verified By</th>
-                            <th class="px-6 py-4 text-left">Approved By</th>
-                            <th class="px-6 py-4 text-center">Action</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Kode Project</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Nama Project</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 300px;">Deskripsi</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Tanggal Mulai</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Tanggal Selesai</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Capex/Opex</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Biaya</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Vendor</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">PIC</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Status</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Approval</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 200px;">Progress</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Verified By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Approved By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center">Action</th>
                         </tr>
                     </thead>
                     {{-- BODY --}}
                     <tbody class="bg-white divide-y divide-slate-200">
                         @forelse($projects as $key => $project)
                             <tr class="hover:bg-blue-50 transition duration-200">
-                                <td class="px-6 py-4 font-semibold text-slate-700">{{ $project->kode_project ?? '-' }}</td>
-                                <td class="px-6 py-4 font-semibold text-slate-800">{{ $project->project_name }}</td>
-                                <td class="px-6 py-4">{{ Str::limit($project->description, 100) }}</td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-700">{{ $project->kode_project ?? '-' }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-800">{{ $project->project_name }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ Str::limit($project->description, 100) }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     {{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : '-' }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     {{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : '-' }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     {{ $project->capex_or_opex ? strtoupper($project->capex_or_opex) : '-' }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     {{ $project->biaya ? 'Rp ' . number_format($project->biaya, 2, ',', '.') : '-' }}
                                 </td>
-                                <td class="px-6 py-4">{{ $project->vendor ?? '-' }}</td>
-                                <td class="px-6 py-4">{{ $project->pic->nama_lengkap ?? '-' }}</td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ $project->vendor ?? '-' }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ $project->pic->nama_lengkap ?? '-' }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <span
                                         class="px-2 py-1 text-xs rounded-full
 
@@ -496,7 +496,7 @@
 
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     @if($project->status == 'approved')
 
@@ -526,7 +526,7 @@
 
                                     @endif
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     @if($project->status == 'approved')
 
@@ -563,10 +563,10 @@
                                     @endif
 
                                 </td>
-                                <td class="px-6 py-4">{{ $project->verifier->nama_lengkap ?? '-' }}</td>
-                                <td class="px-6 py-4">{{ $project->approver->nama_lengkap ?? '-' }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ $project->verifier->nama_lengkap ?? '-' }}</td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">{{ $project->approver->nama_lengkap ?? '-' }}</td>
                                 {{-- ACTION --}}
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     <div class="flex items-center justify-center gap-2 whitespace-nowrap">
 
@@ -805,7 +805,7 @@
         </div>
 
         {{-- PAGINATION --}}
-        <div class="flex items-center justify-between mt-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
             <div class="flex items-center gap-2">
                 <label class="text-sm text-slate-600">Show</label>
                 <select wire:model.live="perPage" class="border border-slate-300 rounded-md px-2 py-2 text-sm">

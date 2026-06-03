@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('dashboard')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -67,17 +67,17 @@
 <?php endif; ?>
         </form>
     </div>
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
         
         <div class="items-center mb-6">
             
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <button type="button" wire:click="showDataInput"
-                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                     Tambah Project
                 </button>
                 <input type="text" wire:model.live="search" placeholder="Search"
-                    class="w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
         </div>
 
@@ -890,7 +890,7 @@
                 </span>
              <?php $__env->endSlot(); ?>
              <?php $__env->slot('content', null, []); ?> 
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
                     
                     <div>
                         <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
@@ -1066,7 +1066,7 @@
 <?php endif; ?>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         
                         <div>
                             <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
@@ -1196,7 +1196,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         
                         <div>
                             <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
@@ -1312,7 +1312,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         
                         <div>
                             <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
@@ -1911,49 +1911,49 @@
                     
                     <thead class="bg-[#0070C0] text-white">
                         <tr class="text-sm uppercase tracking-wide">
-                            <th class="px-6 py-4 text-left">Kode Project</th>
-                            <th class="px-6 py-4 text-left">Nama Project</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 300px;">Deskripsi</th>
-                            <th class="px-6 py-4 text-left">Tanggal Mulai</th>
-                            <th class="px-6 py-4 text-left">Tanggal Selesai</th>
-                            <th class="px-6 py-4 text-left">Capex/Opex</th>
-                            <th class="px-6 py-4 text-left">Biaya</th>
-                            <th class="px-6 py-4 text-left">Vendor</th>
-                            <th class="px-6 py-4 text-left">PIC</th>
-                            <th class="px-6 py-4 text-left">Status</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 180px;">Approval</th>
-                            <th class="px-6 py-4 text-left" style="min-width: 200px;">Progress</th>
-                            <th class="px-6 py-4 text-left">Verified By</th>
-                            <th class="px-6 py-4 text-left">Approved By</th>
-                            <th class="px-6 py-4 text-center">Action</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Kode Project</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Nama Project</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 300px;">Deskripsi</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Tanggal Mulai</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Tanggal Selesai</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Capex/Opex</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Biaya</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Vendor</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">PIC</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Status</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 180px;">Approval</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left" style="min-width: 200px;">Progress</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Verified By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left">Approved By</th>
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center">Action</th>
                         </tr>
                     </thead>
                     
                     <tbody class="bg-white divide-y divide-slate-200">
                         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__empty_1 = true; $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $project): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr class="hover:bg-blue-50 transition duration-200">
-                                <td class="px-6 py-4 font-semibold text-slate-700"><?php echo e($project->kode_project ?? '-'); ?></td>
-                                <td class="px-6 py-4 font-semibold text-slate-800"><?php echo e($project->project_name); ?></td>
-                                <td class="px-6 py-4"><?php echo e(Str::limit($project->description, 100)); ?></td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-700"><?php echo e($project->kode_project ?? '-'); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4 font-semibold text-slate-800"><?php echo e($project->project_name); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e(Str::limit($project->description, 100)); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php echo e($project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d M Y') : '-'); ?>
 
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php echo e($project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d M Y') : '-'); ?>
 
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php echo e($project->capex_or_opex ? strtoupper($project->capex_or_opex) : '-'); ?>
 
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <?php echo e($project->biaya ? 'Rp ' . number_format($project->biaya, 2, ',', '.') : '-'); ?>
 
                                 </td>
-                                <td class="px-6 py-4"><?php echo e($project->vendor ?? '-'); ?></td>
-                                <td class="px-6 py-4"><?php echo e($project->pic->nama_lengkap ?? '-'); ?></td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e($project->vendor ?? '-'); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e($project->pic->nama_lengkap ?? '-'); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
                                     <span
                                         class="px-2 py-1 text-xs rounded-full
 
@@ -1994,7 +1994,7 @@
 
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($project->status == 'approved'): ?>
 
@@ -2025,7 +2025,7 @@
 
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($project->status == 'approved'): ?>
 
@@ -2062,10 +2062,10 @@
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
                                 </td>
-                                <td class="px-6 py-4"><?php echo e($project->verifier->nama_lengkap ?? '-'); ?></td>
-                                <td class="px-6 py-4"><?php echo e($project->approver->nama_lengkap ?? '-'); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e($project->verifier->nama_lengkap ?? '-'); ?></td>
+                                <td class="px-3 sm:px-6 py-3 sm:py-4"><?php echo e($project->approver->nama_lengkap ?? '-'); ?></td>
                                 
-                                <td class="px-6 py-4">
+                                <td class="px-3 sm:px-6 py-3 sm:py-4">
 
                                     <div class="flex items-center justify-center gap-2 whitespace-nowrap">
 
@@ -2304,7 +2304,7 @@
         </div>
 
         
-        <div class="flex items-center justify-between mt-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
             <div class="flex items-center gap-2">
                 <label class="text-sm text-slate-600">Show</label>
                 <select wire:model.live="perPage" class="border border-slate-300 rounded-md px-2 py-2 text-sm">

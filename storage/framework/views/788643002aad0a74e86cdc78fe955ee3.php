@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
         <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('dashboard')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -173,30 +173,25 @@
         </form>
     </div>
 
-    <div class="p-6">
+    <div class="p-3 sm:p-6">
 
         
         <div class="items-center mb-6">
 
-            <div class="flex justify-between">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
 
                 
                 <button type="button" wire:click="showDataInput" class="bg-[#0070C0] hover:bg-blue-800
-                       text-white px-4 py-2 mb-4 rounded
-                       w-52 transition delay-150 duration-300
-                       ease-in-out hover:-translate-y-1 hover:scale-110">
-
+                    text-white px-4 py-2 rounded-lg
+                    w-full sm:w-52 transition duration-300">
                     Tambah Data
-
                 </button>
 
                 
-                <input type="text" wire:model.live="search" placeholder="Search" class="w-72 rounded-lg border border-slate-300
-                       px-4 py-2 shadow-sm
-                       focus:ring-2 focus:ring-blue-500">
-
+                <input type="text" wire:model.live="search" placeholder="Search" class="w-full sm:w-72 rounded-lg border border-slate-300
+                px-4 py-2 shadow-sm
+                focus:ring-2 focus:ring-blue-500">
             </div>
-
         </div>
 
 
@@ -223,7 +218,7 @@
 
              <?php $__env->slot('content', null, []); ?> 
 
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
 
                     
                     <div wire:ignore>
@@ -588,7 +583,7 @@
 
              <?php $__env->slot('content', null, []); ?> 
 
-                <div class="space-y-4">
+                <div class="space-y-4 w-full">
 
                     
                     <div wire:ignore>
@@ -911,50 +906,50 @@
 
 
         
-        <div class="rounded-2xl overflow-hidden">
+        <div class="rounded-2xl overflow-hidden bg-white shadow">
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto w-full">
 
-                <table class="w-full border-collapse">
+                <table class="min-w-[1000px] w-full border-collapse text-sm">
 
                     
                     <thead class="bg-[#0070C0] text-white">
 
                         <tr class="text-sm uppercase tracking-wide">
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 KANTOR ID
                             </th>
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 ID
                             </th>
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 UNIT NAME
                             </th>
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 TINGKAT
                             </th>
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 CREATED DATE
                             </th>
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 CREATED BY
                             </th>
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 MODIFIED DATE
                             </th>
 
-                            <th class="px-6 py-4 text-left">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-left whitespace-nowrap">
                                 MODIFIED BY
                             </th>
 
-                            <th class="px-6 py-4 text-center">
+                            <th class="px-3 sm:px-6 py-3 sm:py-4 text-center whitespace-nowrap">
                                 ACTION
                             </th>
 
@@ -1024,9 +1019,9 @@
 
                                                         <button wire:click="edit('<?php echo e($unit->id); ?>')"
                                                             class="bg-[#0070C0] hover:bg-[#005B9F]
-                                                                                                                               text-white px-4 py-2
-                                                                                                                               rounded-lg text-xs
-                                                                                                                               font-semibold shadow">
+                                                                                                                                                   text-white px-4 py-2
+                                                                                                                                                   rounded-lg text-xs
+                                                                                                                                                   font-semibold shadow">
 
                                                             Edit
 
@@ -1034,9 +1029,9 @@
 
                                                         <button wire:click="confirmDelete('<?php echo e($unit->id); ?>')"
                                                             class="bg-red-500 hover:bg-red-600
-                                                                                                                               text-white px-4 py-2
-                                                                                                                               rounded-lg text-xs
-                                                                                                                               font-semibold shadow">
+                                                                                                                                                   text-white px-4 py-2
+                                                                                                                                                   rounded-lg text-xs
+                                                                                                                                                   font-semibold shadow">
 
                                                             Hapus
 
