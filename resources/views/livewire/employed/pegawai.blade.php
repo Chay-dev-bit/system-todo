@@ -37,19 +37,12 @@
             {{-- SEARCH --}}
             <div class="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
                 <!-- tambah data -->
-<<<<<<< HEAD
                 @if($currentUser && $currentUser->isAdmin())
                     <button type="button" wire:click="showDataInput"
                         class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                         Tambah Data
                     </button>
                 @endif
-=======
-                <button type="button" wire:click="showDataInput"
-                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-                    Tambah Data
-                </button>
->>>>>>> e8250aad06b8b76b46f65ddca4705b369a25614b
                 <input type="text" wire:model.live="search" placeholder="Search"
                     class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
