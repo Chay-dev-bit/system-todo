@@ -266,7 +266,11 @@ class Task extends Component
             })
             ->paginate($this->perPage);
 
-        $penggunas = Pengguna::all();
+        $penggunas = Pengguna::query()
+            ->whereHas('role', function ($query) {
+                $query->where('name', '!=', 'Admin');
+            })
+            ->get();
 
         return view('livewire.todo.task', [
             'tasks' => $tasks,

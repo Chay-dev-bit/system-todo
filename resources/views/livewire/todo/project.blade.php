@@ -18,10 +18,12 @@
         <div class="items-center mb-6">
             {{-- SEARCH --}}
             <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-                <button type="button" wire:click="showDataInput"
-                    class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-                    Tambah Project
-                </button>
+                @if(!auth()->user()?->isAdmin())
+                    <button type="button" wire:click="showDataInput"
+                        class="bg-[#0070C0] hover:bg-blue-800 text-white px-4 py-2 mb-4 rounded w-full sm:w-52 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                        Tambah Project
+                    </button>
+                @endif
                 <input type="text" wire:model.live="search" placeholder="Search"
                     class="w-full sm:w-72 rounded-lg border border-slate-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>

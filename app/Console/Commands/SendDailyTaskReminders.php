@@ -49,7 +49,7 @@ class SendDailyTaskReminders extends Command
             }
 
             $lines = [];
-            $lines[] = 'Reminder Task - ' . $today->format('d-m-Y') . ' (07:00)';
+            $lines[] = 'Reminder Task - ' . $today->format('d-m-Y') . ' (22:13)';
             $lines[] = 'Halo ' . ($staff->nama_lengkap ?? 'Staff') . ', berikut task Anda yang belum selesai:';
             $lines[] = '';
 

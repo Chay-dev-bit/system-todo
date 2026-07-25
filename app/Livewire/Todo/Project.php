@@ -73,6 +73,11 @@ class Project extends Component
     // menampilkan modal input project
     public function showDataInput()
     {
+        if (auth()->user()?->isAdmin()) {
+            session()->flash('error', 'Role admin tidak dapat membuat project.');
+            return;
+        }
+
         $this->resetForm();
         // $this->status = 'pending';
         $this->confirmInput = true;
@@ -102,14 +107,26 @@ class Project extends Component
             })
             ->paginate($this->perPage);
 
-        $penggunas = Pengguna::all();
+        $penggunas = Pengguna::query()
+            ->whereHas('role', function ($query) {
+                $query->where('name', '!=', 'Admin');
+            })
+            ->get();
 
-        $asmen = Pengguna::whereHas('pegawai', function ($query) {
-            $query->where('jabatan_id', 'ASMEN');
-        })->get();
-        $manajers = Pengguna::whereHas('pegawai', function ($query) {
-            $query->where('jabatan_id', 'MANAGR');
-        })->get();
+        $asmen = Pengguna::query()
+            ->whereHas('role', function ($query) {
+                $query->where('name', '!=', 'Admin');
+            })
+            ->whereHas('pegawai', function ($query) {
+                $query->where('jabatan_id', 'ASMEN');
+            })->get();
+        $manajers = Pengguna::query()
+            ->whereHas('role', function ($query) {
+                $query->where('name', '!=', 'Admin');
+            })
+            ->whereHas('pegawai', function ($query) {
+                $query->where('jabatan_id', 'MANAGR');
+            })->get();
         return view('livewire.todo.project', [
             'projects' => $projects,
             'penggunas' => $penggunas,
@@ -121,6 +138,13 @@ class Project extends Component
     // menyimpan data project baru ke database setelah validasi
     public function save()
     {
+        $user = auth()->user();
+
+        if ($user?->isAdmin()) {
+            session()->flash('error', 'Role admin tidak dapat membuat project.');
+            return;
+        }
+
         // validasi inpur
         $this->validate([
             'kode_project' => 'required|unique:projects,kode_project|max:255',
