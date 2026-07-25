@@ -11,7 +11,7 @@ class SendDailyTaskReminders extends Command
 {
     protected $signature = 'todo:send-daily-task-reminders';
 
-    protected $description = 'Kirim reminder WhatsApp jam 07:00 untuk task yang belum selesai.';
+    protected $description = 'Kirim reminder WhatsApp jam 23:16 untuk task yang belum selesai.';
 
     public function handle(): int
     {
@@ -49,7 +49,11 @@ class SendDailyTaskReminders extends Command
             }
 
             $lines = [];
+
             $lines[] = 'Reminder Task - ' . $today->format('d-m-Y') . ' (22:13)';
+
+            $lines[] = 'Reminder Task - ' . $today->format('d-m-Y') . ' (23:16)';
+
             $lines[] = 'Halo ' . ($staff->nama_lengkap ?? 'Staff') . ', berikut task Anda yang belum selesai:';
             $lines[] = '';
 
@@ -59,9 +63,11 @@ class SendDailyTaskReminders extends Command
                 $title = $task->title ?? '-';
                 $status = strtoupper((string) $task->status);
 
+                $targetDate = $task->deadline ?: $task->project?->end_date ?: $task->project?->deadline;
+
                 $targetText = 'Tanpa target';
-                if (! empty($task->deadline)) {
-                    $deadline = Carbon::parse($task->deadline)->startOfDay();
+                if (! empty($targetDate)) {
+                    $deadline = Carbon::parse($targetDate)->startOfDay();
                     $diffDays = $today->diffInDays($deadline, false);
 
                     if ($diffDays < 0) {
