@@ -235,9 +235,24 @@ class Task extends Component
         $this->closeModal();
     }
 
+    protected function sendNotificationToAssignedUser(TaskModel $task, string $message): void
+    {
+        $waha = app(WahaService::class);
+        $staff = $task->assignee;
+
+        if (!$staff) {
+            return;
+        }
+
+        $phoneNumber = $staff->no_wa ?: ($staff->pegawai?->no_telp);
+        if ($phoneNumber) {
+            $waha->sendWhatsApp($phoneNumber, $message);
+        }
+    }
+
     protected function sendNotificationToAsmen($task)
     {
-        $waha = new WahaService();
+        $waha = app(WahaService::class);
         $asmen = $task->project->asmen;
 
         if (!$asmen) {
@@ -245,7 +260,7 @@ class Task extends Component
         }
 
         $staffName = auth()->user()->nama_lengkap ?? 'Staff';
-        $message = "Halo, ada task baru yang menunggu verifikasi!\n\n" .
+        $message = "Halo, ada bukti pengerjaan task yang baru diupload dan menunggu verifikasi.\n\n" .
             "Staff: {$staffName}\n" .
             "Judul Task: {$task->title}\n" .
             "Project: {$task->project->project_name}\n" .
@@ -327,6 +342,13 @@ class Task extends Component
             'create'
         );
         $task->project->updateApprovalStatus();
+        $this->sendNotificationToAssignedUser(
+            $task,
+            "Halo, Anda telah ditugaskan untuk mengerjakan task baru.\n\n" .
+                "Judul Task: {$task->title}\n" .
+                "Project: {$task->project->project_name}\n" .
+                "Silakan cek di sistem."
+        );
 
         session()->flash('success', 'Task berhasil ditambahkan');
 
@@ -512,6 +534,13 @@ class Task extends Component
                 'approve'
             );
             $task->project->updateApprovalStatus();
+            $this->sendNotificationToAssignedUser(
+                $task,
+                "Halo, task Anda telah disetujui oleh Manager.\n\n" .
+                    "Judul Task: {$task->title}\n" .
+                    "Project: {$task->project->project_name}\n" .
+                    "Silakan cek di sistem."
+            );
 
             session()->flash('success', 'Task berhasil diapprove!');
             $this->resetPage();
@@ -707,13 +736,6 @@ class Task extends Component
 
     protected function sendNotificationToStaff($task)
     {
-        $waha = new WahaService();
-        $staff = $task->assignee;
-
-        if (!$staff) {
-            return;
-        }
-
         $rejectorName = auth()->user()->nama_lengkap ?? 'User';
         $message = "Halo, task Anda telah ditolak!\n\n" .
             "Judul Task: {$task->title}\n" .
@@ -721,21 +743,11 @@ class Task extends Component
             "Alasan: {$this->rejection_note}\n" .
             "Silakan cek di sistem!";
 
-        $phoneNumber = $staff->no_wa ?: ($staff->pegawai?->no_telp);
-        if ($phoneNumber) {
-            $waha->sendWhatsApp($phoneNumber, $message);
-        }
+        $this->sendNotificationToAssignedUser($task, $message);
     }
 
     protected function sendNotificationVerifiedToStaff($task, $asmen): void
     {
-        $waha = new WahaService();
-        $staff = $task->assignee;
-
-        if (!$staff) {
-            return;
-        }
-
         $asmenName = $asmen->nama_lengkap ?? 'Asisten Manajer';
         $message = "Halo, task Anda sudah diverifikasi!\n\n" .
             "Judul Task: {$task->title}\n" .
@@ -744,22 +756,11 @@ class Task extends Component
             "Status: Menunggu approve Manajer\n\n" .
             "Silakan cek di sistem!";
 
-        $phoneNumber = $staff->no_wa ?: ($staff->pegawai?->no_telp);
-        if ($phoneNumber) {
-            $waha->sendWhatsApp($phoneNumber, $message);
-        }
+        $this->sendNotificationToAssignedUser($task, $message);
     }
 
     protected function sendNotificationCancelledToStaff($task)
     {
-        $waha = new WahaService();
-
-        $staff = $task->assignee;
-
-        if (!$staff) {
-            return;
-        }
-
         $cancelBy =
             auth()->user()->nama_lengkap
             ?? 'User';
@@ -777,17 +778,7 @@ class Task extends Component
 
             "Silakan cek sistem untuk detail lebih lanjut.";
 
-        $phoneNumber =
-            $staff->no_wa
-            ?: ($staff->pegawai?->no_telp);
-
-        if ($phoneNumber) {
-
-            $waha->sendWhatsApp(
-                $phoneNumber,
-                $message
-            );
-        }
+        $this->sendNotificationToAssignedUser($task, $message);
     }
     public function confirmDelete($id)
     {
